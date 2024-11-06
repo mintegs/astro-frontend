@@ -1,20 +1,10 @@
 ---
-import "../styles/index.css";
+import RootLayout from "../layouts/rootLayout.astro"
 import ReactComponent from "../components/react/react-component"
 import SolidComponent from "../components/solid/solid-component"
 ---
-
-<html lang="fa" dir="rtl">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-		<ReactComponent client:only="react"/>
-		<SolidComponent client:only="solid-js"/>
-	</body>
-</html>
+<RootLayout title="home page" description="home page description">
+	<h1>Astro</h1>
+	<ReactComponent client:only="react"/>
+	<SolidComponent client:only="solid-js"/>
+</RootLayout>

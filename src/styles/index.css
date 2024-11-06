@@ -6,3 +6,110 @@ body {
   background-color: #0d1117;
   color: #f0f6fc;
 }
+
+/* navbar */
+.navbar {
+  @apply text-[#f0f6fc] bg-[#25292e] py-5 px-6 shadow-lg flex items-center justify-between;
+}
+.search-box {
+  @apply w-full bg-[#25292e] max-w-lg px-4 py-2 rounded border border-[#3d444d] focus:outline-none focus:ring focus:border-[#1f6feb];
+}
+.sub-navbar {
+  @apply bg-[#25292e] pt-3 shadow-lg border-b-2 border-[#3d444d];
+}
+.sub-navbar-item {
+  @apply pb-2 px-2 border-b-2 border-transparent transition-all duration-500 ease-in-out;
+}
+.sub-navbar-item.active {
+  @apply text-white hover:text-gray-300 border-[#1f6feb];
+}
+.sub-navbar-item.inactive {
+  @apply text-gray-300 hover:text-white;
+}
+
+.auth-full-bg {
+  /* background-color: ; */
+  @apply bg-[#0d1117];
+}
+
+@media (min-width: 1200px) {
+  .auth-full-bg {
+    height: 100vh;
+  }
+}
+
+.auth-full-bg::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+
+.auth-full-bg .bg-overlay {
+  background: url("/images/bg-auth-overlay.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.auth-full-page-content {
+  display: flex;
+}
+
+@media (min-width: 1200px) {
+  .auth-full-page-content {
+    min-height: 100vh;
+  }
+}
+
+/* Forms start */
+.form-input {
+  @apply w-full rounded-lg py-1 px-2 bg-[#0d1117] border border-[#3d444d] text-[#f0f6fc] text-base outline-none focus-visible:shadow-none focus:border-blue-500 transition;
+}
+.form-input.ltr {
+  direction: ltr;
+}
+.form-input.disabled {
+  @apply cursor-not-allowed placeholder-gray-500 bg-gray-500 bg-opacity-10 text-slate-400;
+}
+.form-input.birthday {
+  @apply border-0 bg-gray-700 bg-opacity-0;
+}
+.search-input {
+  @apply w-full rounded-md border border-slate-700 py-3 px-5 bg-slate-700  text-white text-base outline-none focus-visible:shadow-none focus:border-blue-500 focus:border-2 transition;
+}
+/* Forms end */
+
+/* Alert start */
+.alert {
+  @apply flex items-center p-4 mb-4 rounded-lg bg-red-800 text-red-400;
+}
+.alert button {
+  @apply ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 p-1.5 inline-flex items-center justify-center h-8 w-8 focus:ring-red-400 bg-red-800 text-red-400 hover:bg-red-700;
+}
+.alert.danger {
+  @apply bg-red-800 text-red-400;
+}
+.alert.danger button {
+  @apply focus:ring-red-400 bg-red-800 text-red-400 hover:bg-red-700;
+}
+.alert.success {
+  @apply bg-green-800 text-green-400;
+}
+.alert.success button {
+  @apply focus:ring-green-400 bg-green-800 text-green-400 hover:bg-green-700;
+}
+.alert.warning {
+  @apply bg-yellow-800 text-yellow-400;
+}
+.alert.warning button {
+  @apply focus:ring-yellow-400 bg-yellow-800 text-yellow-400 hover:bg-yellow-700;
+}
+.alert.info {
+  @apply bg-blue-800 text-blue-400;
+}
+.alert.info button {
+  @apply focus:ring-blue-400 bg-blue-800 text-blue-400 hover:bg-blue-700;
+}
+/* Alert end */

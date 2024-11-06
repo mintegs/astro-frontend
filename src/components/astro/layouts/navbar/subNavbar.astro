@@ -1,0 +1,21 @@
+---
+const currentPath = Astro.url.pathname;
+const isActive = (path:string) => path === currentPath ? 'active': 'inactive'
+---
+
+<nav class="sub-navbar">
+  <div class="container mx-auto flex justify-center gap-8">
+    <a href="/articles" class={`sub-navbar-item ${isActive('/articles')}`}>
+      مقالات
+    </a>
+    <a href="/posts" class={`sub-navbar-item ${isActive('/posts')}`}>
+      پست‌ها
+    </a>
+    <a href="/about" class={`sub-navbar-item ${isActive('/about')}`}>
+      درباره ما
+    </a>
+    <a href="/contact" class={`sub-navbar-item ${isActive('/contact')}`}>
+      تماس با ما
+    </a>
+  </div>
+</nav>

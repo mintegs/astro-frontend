@@ -1,0 +1,39 @@
+---
+import AuthButton from "./authButton.astro";
+import SearchBox from "./searchBox.astro";
+import SubNavbar from "./subNavbar.astro";
+---
+
+<>
+      {/* Main Navbar */}
+      <nav class="navbar">
+        {/* Left side - Logo or Site Name */}
+        <div class="flex items-center gap-4">
+          {/* If you have a logo */}
+          {/* <Image src="/path-to-your-logo.png" alt="Site Logo" width={40} height={40} /> */}
+
+          {/* Or Site Name */}
+          <a href="/" class="text-2xl font-bold text-gray-200">
+            Mintegs
+          </a>
+        </div>
+
+        <SearchBox />
+
+        <!-- {/* Right side - icons and user info */} -->
+        <div class="flex items-center gap-4">
+          <!-- {/* Login and Register Buttons */} -->
+          <AuthButton />
+          <!-- <div class="flex items-center gap-4"> -->
+            <!-- {/* Notifications */} -->
+            <!-- {/* <Notification /> */} -->
+
+            <!-- {/* User Avatar */} -->
+            <!-- {/* <UserMenu /> */} -->
+          <!-- </div> -->
+        </div>
+      </nav>
+
+      <!-- {/* Sub Navbar */} -->
+      <SubNavbar />
+    </>
