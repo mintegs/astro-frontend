@@ -1,0 +1,10 @@
+---
+import RootLayout from "../../../layouts/rootLayout.astro"
+import ReactComponent from "../../../components/react/react-component"
+import SolidComponent from "../../../components/solid/solid-component"
+---
+<RootLayout title="analyzing instagram page" description="analyzing instagram page description">
+	<h1>analyzing instagram</h1>
+	<ReactComponent client:only="react"/>
+	<SolidComponent client:only="solid-js"/>
+</RootLayout>
