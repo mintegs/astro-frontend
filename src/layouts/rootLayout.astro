@@ -13,6 +13,8 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <Navbar/>
-    <slot />
+    <div class="row p-6">
+      <slot />
+    </div>
   </body>
 </html>

@@ -1,10 +1,44 @@
 ---
 import RootLayout from "../../../layouts/rootLayout.astro"
-import ReactComponent from "../../../components/react/react-component"
-import SolidComponent from "../../../components/solid/solid-component"
 ---
 <RootLayout title="portfolios page" description="portfolios page description">
-	<h1>portfolios</h1>
-	<ReactComponent client:only="react"/>
-	<SolidComponent client:only="solid-js"/>
+	<h3 class="mb-3 pb-2 border-b text-lg font-semibold">
+        سبدهای سرمایه گذاری
+    </h3>
+	<div class="text-gray-400">
+		<div class="flex items-center">
+			<svg
+				class="flex-shrink-0 w-4 h-4 me-2 dark:text-gray-300"
+				aria-hidden="true"
+				xmlns="http://www.w3.org/2000/svg"
+				fill="currentColor"
+				viewBox="0 0 20 20"
+			>
+				<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+			</svg>
+			<span class="sr-only">توضیحات</span>
+			<h3 class="text-lg font-medium text-gray-800 dark:text-gray-300">
+				توضیحات
+			</h3>
+		</div>
+		<div class="mt-2 mb-4 text-sm text-gray-800 dark:text-gray-300">
+			معاملات رمز ارزی خود را به سبد سرمایه گذاری اضافه کنید تا به توانید به
+			راحتی دارایی‌ها، عملکرد و سود و زیان خود را پیگیری کنید.
+		</div>
+	</div>
+	<div class="grid grid-cols-4 gap-4">
+		<div class="relative max-w-xs bg-[#181b1e] rounded-2xl border border-dashed cursor-pointer p-4 text-center group border-gray-500 hover:border-blue-500">
+			<div class="mb-6 flex items-center justify-center">
+				<div class="h-11 w-11 rounded-full flex justify-center items-center bg-gray-700 group-hover:text-blue-500">
+					<svg width={20} height={20} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+					</svg>
+				</div>
+			</div>
+			<h4 class="text-base font-semibold mb-2 text-gray-300 group-hover:text-blue-500">
+				ایجاد سبد سرمایه گذاری
+			</h4>
+		</div>
+		<div class="p-4 rounded-lg col-span-3">list</div>
+	</div>
 </RootLayout>
