@@ -1,8 +1,10 @@
 ---
-
+import "../styles/index.css";
+import ReactComponent from "../components/react/react-component"
+import SolidComponent from "../components/solid/solid-component"
 ---
 
-<html lang="en">
+<html lang="fa" dir="rtl">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -12,5 +14,7 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+		<ReactComponent client:only="react"/>
+		<SolidComponent client:only="solid-js"/>
 	</body>
 </html>

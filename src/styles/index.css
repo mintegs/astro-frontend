@@ -1,0 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Vazirmatn:wght@100..900&display=swap");
+
+body {
+  direction: rtl;
+  font-family: "Rubik", sans-serif;
+  background-color: #0d1117;
+  color: #f0f6fc;
+}
