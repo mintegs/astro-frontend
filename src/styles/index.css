@@ -3,25 +3,25 @@
 body {
   direction: rtl;
   font-family: "Rubik", sans-serif;
-  background-color: #0d1117;
-  color: #f0f6fc;
+  @apply bg-[#f8f8fb] text-[#495057];
 }
+/* #4f46e5 */
 
 /* navbar */
 .navbar {
-  @apply text-[#f0f6fc] bg-[#25292e] py-5 px-6 shadow-lg flex items-center justify-between;
+  @apply sticky top-0 text-[#e9ecef] z-40 px-6 py-5 backdrop-blur flex items-center justify-between transition-colors duration-500 lg:z-50 bg-[#556ee6];
 }
 .search-box {
-  @apply w-full bg-[#25292e] max-w-lg px-4 py-2 rounded border border-[#3d444d] focus:outline-none focus:ring focus:border-[#1f6feb];
+  @apply w-full max-w-lg px-4 py-2 bg-[#556ee6] rounded border border-[#556ee6] focus:outline-none focus:border-[#e9ecef];
 }
 .sub-navbar {
-  @apply bg-[#25292e] pt-3 shadow-lg border-b-2 border-[#3d444d];
+  @apply sticky top-[80px] text-[#e9ecef] z-40 bg-[#556ee6] pt-3 shadow-lg backdrop-blur transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10;
 }
 .sub-navbar-item {
   @apply pb-2 px-2 border-b-2 border-transparent transition-all duration-500 ease-in-out;
 }
 .sub-navbar-item.active {
-  @apply text-white hover:text-gray-300 border-[#1f6feb];
+  @apply text-white hover:text-gray-300 border-[#e9ecef];
 }
 .sub-navbar-item.inactive {
   @apply text-gray-300 hover:text-white;
@@ -113,3 +113,7 @@ body {
   @apply focus:ring-blue-400 bg-blue-800 text-blue-400 hover:bg-blue-700;
 }
 /* Alert end */
+
+.card {
+  @apply bg-gray-200 p-4 rounded-lg shadow-lg;
+}
