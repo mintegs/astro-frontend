@@ -11,7 +11,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   integrations: [
     react({ include: ["**/react/*"] }),
-    solidJs({ include: ["**/solid/*"] }),
+    solidJs({ include: ["**/solid/*", "**/solid/**/*"] }),
     tailwind(),
   ],
 });
