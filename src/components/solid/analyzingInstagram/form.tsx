@@ -2,6 +2,7 @@ import { createEffect, createSignal } from "solid-js";
 import JSZip from "jszip";
 import InformationAnalyzingInstagramCard from "./informationCard";
 import AnalyzingInstagramTabs from "./tabs";
+import Alert from "../common/alert";
 
 export default function AnalyzingInstagramFollowersForm() {
   let fileInputRef: HTMLInputElement | undefined;
@@ -159,7 +160,13 @@ export default function AnalyzingInstagramFollowersForm() {
       </div>
 
       {/* Display error message */}
-      {errorMessage() && <p class="text-red-500">{errorMessage()}</p>}
+      {errorMessage() && (
+        <Alert
+          message={errorMessage() as string}
+          type="danger"
+          onClose={() => setErrorMessage(null)}
+        />
+      )}
 
       {hasData() && (
         <div class="grid grid-cols-2 gap-4">
