@@ -39,7 +39,7 @@ export default function Modal({ close, children, title }: Props) {
                 <span className="sr-only">close</span>
               </button>
             </div>
-            {children}
+            <div className="w-full p-4">{children}</div>
           </div>
         </div>
       </div>
