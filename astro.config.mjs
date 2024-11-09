@@ -10,7 +10,7 @@ import tailwind from "@astrojs/tailwind";
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    react({ include: ["**/react/*"] }),
+    react({ include: ["**/react/*", "**/react/**/*"] }),
     solidJs({ include: ["**/solid/*", "**/solid/**/*"] }),
     tailwind(),
   ],

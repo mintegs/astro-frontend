@@ -9,13 +9,13 @@ body {
 
 /* navbar */
 .navbar {
-  @apply sticky top-0 text-[#e9ecef] z-40 px-6 py-5 backdrop-blur flex items-center justify-between transition-colors duration-500 lg:z-50 bg-[#556ee6];
+  @apply top-0 text-[#e9ecef] z-10 px-6 py-5 backdrop-blur flex items-center justify-between transition-colors duration-500 lg:z-50 bg-[#556ee6];
 }
 .search-box {
   @apply w-full max-w-lg px-4 py-2 bg-[#556ee6] rounded border border-[#556ee6] focus:outline-none focus:border-[#e9ecef];
 }
 .sub-navbar {
-  @apply sticky top-[80px] text-[#e9ecef] z-40 bg-[#556ee6] pt-3 shadow-lg backdrop-blur transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10;
+  @apply top-[80px] text-[#e9ecef] z-40 bg-[#556ee6] pt-3 shadow-lg backdrop-blur transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10;
 }
 .sub-navbar-item {
   @apply pb-2 px-2 border-b-2 border-transparent transition-all duration-500 ease-in-out;
