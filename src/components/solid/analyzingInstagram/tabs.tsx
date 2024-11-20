@@ -56,7 +56,7 @@ export default function AnalyzingInstagramTabs({
       </div>
       <div class="py-2 px-4">
         <Show when={tab() === "no-follow"}>
-          <div>
+          <div class="overflow-y-auto h-44">
             {noFollow().length > 0 ? (
               <ul class="flex flex-col divide-y divide-gray-400">
                 {noFollow().map((item: string) => (
@@ -80,7 +80,7 @@ export default function AnalyzingInstagramTabs({
           </div>
         </Show>
         <Show when={tab() === "hide-story"}>
-          <div>
+          <div class="overflow-y-auto h-44">
             {hideStory().length > 0 ? (
               <ul class="flex flex-col divide-y divide-gray-400">
                 {hideStory().map((item: string) => (
@@ -104,7 +104,7 @@ export default function AnalyzingInstagramTabs({
           </div>
         </Show>
         <Show when={tab() === "pending-requests"}>
-          <div>
+          <div class="overflow-y-auto h-44">
             {pendingRequests().length > 0 ? (
               <ul class="flex flex-col divide-y divide-gray-400">
                 {pendingRequests().map((item: string) => (
@@ -128,7 +128,7 @@ export default function AnalyzingInstagramTabs({
           </div>
         </Show>
         <Show when={tab() === "block-list"}>
-          <div>
+          <div class="overflow-y-auto h-44">
             {blockList().length > 0 ? (
               <ul class="flex flex-col divide-y divide-gray-400">
                 {blockList().map((item: string) => (
