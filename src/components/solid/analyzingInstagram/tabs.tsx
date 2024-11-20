@@ -19,7 +19,7 @@ export default function AnalyzingInstagramTabs({
   return (
     <div class="shadow-lg bg-gray-200 rounded-lg">
       <div class="flex">
-        <ul class="flex justify-center items-start w-full transition-all duration-300 p-2 overflow-hidden">
+        <ul class="flex overflow-x-auto md:justify-center items-start w-full transition-all duration-300 p-2">
           <li
             class={`${
               tab() === "no-follow" ? "bg-white text-[#556ee6]" : ""
