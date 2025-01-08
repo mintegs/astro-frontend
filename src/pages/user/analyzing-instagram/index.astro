@@ -2,10 +2,10 @@
 import RootLayout from "../../../layouts/rootLayout.astro"
 import AnalyzingInstagramFollowersForm from "../../../components/solid/analyzingInstagram/form"
 ---
-<RootLayout title="analyzing instagram page" description="analyzing instagram page description">
-	<div class="p-2">
+<RootLayout title="Analyzing Instagram Page" description="Analyzing Instagram page description">
+  <div class="p-2">
     <h3 class="mb-3 pb-2 border-b text-lg font-semibold">
-      آنالیز فالور‌ها و فالویینگ‌ها
+      Followers and Following Analysis
     </h3>
     <div class="text-gray-400">
       <div class="flex items-center">
@@ -18,15 +18,13 @@ import AnalyzingInstagramFollowersForm from "../../../components/solid/analyzing
         >
           <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
         </svg>
-        <span class="sr-only">توضیحات</span>
+        <span class="sr-only">Description</span>
         <h3 class="text-lg font-medium text-gray-500">
-          توجه
+          Notice
         </h3>
       </div>
       <div class="mt-2 mb-4 text-sm text-gray-500">
-        بخش آنالیز فالورها و فالویینگ‌ها فقط برای پلتفرم اینستاگرام در
-        دسترس است و تمامی فایل های آپلود شده در لحظه پردازش می‌شود و هیچ
-        داده‌ای به سرور ما انتقال داده نمی‌شود.
+        The followers and following analysis section is only available for the Instagram platform. All uploaded files are processed instantly, and no data is transferred to our server.
       </div>
     </div>
     <AnalyzingInstagramFollowersForm client:only="solid-js" />

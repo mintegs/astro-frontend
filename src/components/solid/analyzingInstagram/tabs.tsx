@@ -26,7 +26,7 @@ export default function AnalyzingInstagramTabs({
             } inline-block py-3 px-4 font-medium rounded-lg whitespace-nowrap cursor-pointer`}
             onClick={() => setTab("no-follow")}
           >
-            دنبال‌ نکرده‌ها
+            Not Following Back
           </li>
           <li
             class={`${
@@ -34,7 +34,7 @@ export default function AnalyzingInstagramTabs({
             } inline-block py-3 px-4 font-medium rounded-lg whitespace-nowrap cursor-pointer`}
             onClick={() => setTab("hide-story")}
           >
-            پنهان‌ شدگان استوری
+            Story Hidden
           </li>
           <li
             class={`${
@@ -42,7 +42,7 @@ export default function AnalyzingInstagramTabs({
             } inline-block py-3 px-4 font-medium rounded-lg whitespace-nowrap cursor-pointer`}
             onClick={() => setTab("pending-requests")}
           >
-            در انتظار تأیید فالو
+            Pending Follow Requests
           </li>
           <li
             class={`${
@@ -50,7 +50,7 @@ export default function AnalyzingInstagramTabs({
             } inline-block py-3 px-4 font-medium rounded-lg whitespace-nowrap cursor-pointer`}
             onClick={() => setTab("block-list")}
           >
-            مسدود شده
+            Blocked Users
           </li>
         </ul>
       </div>
@@ -69,7 +69,7 @@ export default function AnalyzingInstagramTabs({
                       target="_blank"
                       class="py-1.5 px-3.5 text-xs bg-red-500 text-white rounded-md font-medium leading-5 text-center shadow-xs transition-all duration-500 hover:bg-red-700"
                     >
-                      آنفالو
+                      Unfollow
                     </a>
                   </li>
                 ))}
@@ -93,7 +93,7 @@ export default function AnalyzingInstagramTabs({
                       target="_blank"
                       class="py-1.5 px-3.5 text-xs bg-[#556ee6] hover:bg-[#3b53c9] text-white rounded-md font-medium leading-5 text-center shadow-xs transition-all duration-500"
                     >
-                      مشاهده
+                      View
                     </a>
                   </li>
                 ))}
@@ -117,7 +117,7 @@ export default function AnalyzingInstagramTabs({
                       target="_blank"
                       class="py-1.5 px-3.5 text-xs bg-[#556ee6] hover:bg-[#3b53c9] text-white rounded-md font-medium leading-5 text-center shadow-xs transition-all duration-500"
                     >
-                      مشاهده
+                      View
                     </a>
                   </li>
                 ))}
@@ -141,7 +141,7 @@ export default function AnalyzingInstagramTabs({
                       target="_blank"
                       class="py-1.5 px-3.5 text-xs bg-[#556ee6] hover:bg-[#3b53c9] text-white rounded-md font-medium leading-5 text-center shadow-xs transition-all duration-500"
                     >
-                      مشاهده
+                      View
                     </a>
                   </li>
                 ))}

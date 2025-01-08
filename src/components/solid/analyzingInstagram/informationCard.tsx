@@ -20,32 +20,32 @@ export default function InformationAnalyzingInstagramCard({
   return (
     <div class="card">
       <div>
-        <h5 class="text-lg mb-1">اطلاعات تکمیلی</h5>
+        <h5 class="text-lg mb-1">Additional Information</h5>
         <p class="text-base">
-          براساس داده‌های اینستاگرام که از طریق فایل در اختیار ما گذاشته است:
+          Based on the Instagram data provided through the file:
         </p>
         <p class="text-sm mt-2">
-          تعداد فالور‌های شما:{" "}
+          Your followers count:{" "}
           <span class="font-bold">{followersCount().length}</span>
         </p>
         <p class="text-sm mt-2">
-          تعداد فالویینگ‌های شما:{" "}
+          Your following count:{" "}
           <span class="font-bold">{followingCount().length}</span>
         </p>
         <p class="text-sm mt-2">
-          تعداد کسانی که متقابلا شما را فالو نکرده‌اند:{" "}
+          Number of people who did not follow you back:{" "}
           <span class="font-bold">{noFollowCount().length}</span>
         </p>
         <p class="text-sm mt-2">
-          تعداد کسانی که استوری شما برای آنها پنهان شده است :{" "}
+          Number of people who have hidden your story:{" "}
           <span class="font-bold">{hideStoryCount().length}</span>
         </p>
         <p class="text-sm mt-2">
-          تعداد کسانی که شما به آنها درخواست داده‌اید ولی هنوز قبول نکرده‌اند :{" "}
+          Number of people you have sent requests to but they haven't accepted yet:{" "}
           <span class="font-bold">{pendingRequestsCount().length}</span>
         </p>
         <p class="text-sm mt-2">
-          تعداد کسانی که شما به آنها را مسدود کرده‌اید :{" "}
+          Number of people you have blocked:{" "}
           <span class="font-bold">{blockCount().length}</span>
         </p>
       </div>
