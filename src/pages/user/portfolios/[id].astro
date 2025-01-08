@@ -3,16 +3,16 @@ import CreatePortfolio from "../../../components/react/portfolios/createPortfoli
 import RootLayout from "../../../layouts/rootLayout.astro"
 ---
 <RootLayout title="portfolios id" description="portfolios id">
- <div class="flex flex-col">
+ <div class="flex flex-col p-2">
 <div class=" overflow-x-auto">
   <div class="min-w-full inline-block align-middle">
       <div class="relative grid grid-cols-4 gap-4 items-center text-gray-500 focus-within:text-gray-900 mb-5">
-        <div class="col-span-1 p-2">
+        <div class="col-span-1">
             <div class="cursor-pointer bg-[#556ee6] text-white p-2.5 text-center text-base rounded-lg shadow-lg transition duration-300 ease-in-out">
                 اضافه کردن دارایی
             </div>
         </div>
-        <div class="col-span-3 p-2">
+        <div class="col-span-3">
           <div class="absolute inset-y-0 right flex items-center pr-3 pointer-events-none ">
               <svg class="w-5 h-5" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M17.5 17.5L15.4167 15.4167M15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333C11.0005 15.8333 12.6614 15.0929 13.8667 13.8947C15.0814 12.6872 15.8333 11.0147 15.8333 9.16667Z" stroke="#9CA3AF" stroke-width="1.6" stroke-linecap="round" />
@@ -23,7 +23,7 @@ import RootLayout from "../../../layouts/rootLayout.astro"
           <input type="text" class="block w-full h-11 pl-5 pr-10 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-transparent border border-gray-300 rounded-lg placeholder-gray-400 focus:ring-[#556ee6]" placeholder="Search for company">
         </div>
       </div>
-      <div class="overflow-hidden border-2 rounded-lg m-2 p-1">
+      <div class="overflow-hidden border-2 rounded-lg p-1">
           <table class="min-w-full">
               <thead>
                   <tr class="bg-gray-200">
