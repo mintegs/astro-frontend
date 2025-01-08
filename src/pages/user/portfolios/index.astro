@@ -1,5 +1,5 @@
 ---
-import CreatePortfolio from "../../../components/react/portfolios/createPortfoli"
+import CreatePortfolio from "../../../components/react/portfolios/createPortfolio"
 import RootLayout from "../../../layouts/rootLayout.astro"
 ---
 <RootLayout title="portfolios page" description="portfolios page description">
@@ -29,6 +29,14 @@ import RootLayout from "../../../layouts/rootLayout.astro"
 	</div>
 	<div class="grid grid-cols-4 gap-4">
 		<CreatePortfolio client:only="react"/>
-		<div class="p-4 rounded-lg col-span-3">list</div>
+		<div class="col-span-3">
+			<div class="grid grid-cols-3 gap-4 items-center">
+				<div class="relative max-w-xs card cursor-pointer text-center group hover:bg-[#556ee6]">
+					<h4 class="text-sm font-medium leading-snug mb-2 group-hover:text-white">
+						سبد پر ریسک
+					</h4>
+				</div>
+			</div>
+		</div>
 	</div>
 </RootLayout>
