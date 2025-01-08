@@ -1,5 +1,5 @@
 ---
-import CreatePortfolio from "../../../components/react/portfolios/createPortfolio"
+import CreateAsset from "../../../components/react/portfolios/createAsset"
 import RootLayout from "../../../layouts/rootLayout.astro"
 ---
 <RootLayout title="portfolios id" description="portfolios id">
@@ -8,9 +8,7 @@ import RootLayout from "../../../layouts/rootLayout.astro"
   <div class="min-w-full inline-block align-middle">
       <div class="relative grid grid-cols-4 gap-4 items-center text-gray-500 focus-within:text-gray-900 mb-5">
         <div class="col-span-1">
-            <div class="cursor-pointer bg-[#556ee6] text-white p-2.5 text-center text-base rounded-lg shadow-lg transition duration-300 ease-in-out">
-                اضافه کردن دارایی
-            </div>
+            <CreateAsset client:only="react"/>
         </div>
         <div class="col-span-3">
           <div class="absolute inset-y-0 right flex items-center pr-3 pointer-events-none ">

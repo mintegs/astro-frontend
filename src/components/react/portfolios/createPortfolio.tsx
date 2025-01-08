@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Modal from "../common/modal";
-import CreatePortfolioForm from "./createForm";
+import CreatePortfolioForm from "./createPortfolioForm";
 
 export default function CreatePortfolio() {
   const [modal, setModal] = useState(false);
