@@ -1,4 +1,4 @@
-import type { Accessor } from "solid-js";
+import { createSignal, type Accessor } from "solid-js";
 
 interface Props {
   followersCount: Accessor<string[]>;
@@ -17,11 +17,15 @@ export default function InformationAnalyzingInstagramCard({
   pendingRequestsCount,
   blockCount,
 }: Props) {
+  const [isOpen, setIsOpen] = createSignal(true);
   return (
     <div class="card">
-      <div>
-        <h5 class="text-lg mb-1">Additional Information</h5>
-        <p class="text-base">
+      <div onclick={()=>setIsOpen(!isOpen())} class="w-full text-left text-lg font-semibold flex justify-between items-center cursor-pointer">
+        <span>Additional Information</span>
+        <span>{isOpen() ? "▲" : "▼"}</span>
+      </div>
+      {isOpen() && (<div class="h-48">
+        <p class="text-base mt-2">
           Based on the Instagram data provided through the file:
         </p>
         <p class="text-sm mt-2">
@@ -48,7 +52,7 @@ export default function InformationAnalyzingInstagramCard({
           Number of people you have blocked:{" "}
           <span class="font-bold">{blockCount().length}</span>
         </p>
-      </div>
+      </div>)}
     </div>
   );
 }

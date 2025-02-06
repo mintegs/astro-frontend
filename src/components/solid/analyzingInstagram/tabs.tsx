@@ -56,7 +56,7 @@ export default function AnalyzingInstagramTabs({
       </div>
       <div class="py-2 px-4">
         <Show when={tab() === "no-follow"}>
-          <div class="overflow-y-auto h-44">
+          <div class="overflow-y-auto h-[11.3rem]">
             {noFollow().length > 0 ? (
               <ul class="flex flex-col divide-y divide-gray-400">
                 {noFollow().map((item: string) => (
