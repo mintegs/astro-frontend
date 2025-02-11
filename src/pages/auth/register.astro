@@ -1,0 +1,25 @@
+---
+import AuthLayout from "../../layouts/authLayout.astro";
+import RegisterForm from "../../components/react/auth/register/form";
+---
+<AuthLayout 
+    title="ثبت نام" 
+    description="ثبت نام در مینتگس" 
+    overlay={{
+      title:"ایجاد حساب کاربری",
+      content:"برای ساخت حساب کاربری همین حالا اقدام کن"
+    }}
+>
+  <RegisterForm client:only="react"/>
+  <div class="mt-5 text-center">
+      <p class="text-sm">
+        اگر حساب کاربری دارید؟{" "}
+        <a
+          href="/login"
+          class="font-medium text-blue-600"
+        >
+          وارد شوید
+        </a>
+      </p>
+  </div>
+</AuthLayout>   
