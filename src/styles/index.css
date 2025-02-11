@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Vazirmatn:wght@100..900&display=swap");
 
 body {
-  direction: ltr;
+  direction: rtl;
   font-family: "Rubik", sans-serif;
   @apply bg-[#f8f8fb] text-[#495057];
 }
@@ -119,4 +119,44 @@ body {
 
 .card {
   @apply bg-gray-200 p-4 rounded-lg shadow-lg;
+}
+
+
+.auth-full-bg {
+  /* background-color: ; */
+  @apply bg-[#556ee6];
+}
+
+@media (min-width: 1200px) {
+  .auth-full-bg {
+    height: 100vh;
+  }
+}
+
+.auth-full-bg::before {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+}
+
+.auth-full-bg .bg-overlay {
+
+  background: url("/images/bg-auth-overlay.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  @apply bg-[#8599ff];
+  background-color: #8599ff;
+}
+
+.auth-full-page-content {
+  display: flex;
+}
+
+@media (min-width: 1200px) {
+  .auth-full-page-content {
+    min-height: 100vh;
+  }
 }

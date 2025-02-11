@@ -6,16 +6,17 @@ const isActive = (path:string) => path === currentPath ? 'active': 'inactive'
 <nav class="sub-navbar">
   <div class="container mx-auto flex justify-center gap-8">
     <a href="/" class={`sub-navbar-item ${isActive('/')}`}>
-      Articles
+      مقالات
     </a>
     <a href="/posts" class={`sub-navbar-item ${isActive('/posts')}`}>
-      Posts
+      پست‌ها
     </a>
     <a href="/about" class={`sub-navbar-item ${isActive('/about')}`}>
-      About Us
+      درباره ما
     </a>
     <a href="/contact" class={`sub-navbar-item ${isActive('/contact')}`}>
-      Contact Us
+      تماس با ما
     </a>
   </div>
 </nav>
+
