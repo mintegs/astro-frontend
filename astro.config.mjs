@@ -7,7 +7,7 @@ import solidJs from '@astrojs/solid-js'
 
 import tailwind from '@astrojs/tailwind'
 
-import vercel from '@astrojs/vercel'
+import netlify from '@astrojs/netlify'
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +18,8 @@ export default defineConfig({
   ],
 
   output: 'server',
-  adapter: vercel({
+  adapter: netlify({
     edgeMiddleware: true,
+    cacheOnDemandPages: true,
   }),
 })
