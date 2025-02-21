@@ -12,13 +12,14 @@ import netlify from "@astrojs/netlify";
 // https://astro.build/config
 export default defineConfig({
   integrations: [
-    react({ include: ["**/react/*", "**/react/**/*"] }),
-    solidJs({ include: ["**/solid/*", "**/solid/**/*"] }),
+    react({ include: ['**/react/*', '**/react/**/*'] }),
+    solidJs({ include: ['**/solid/*', '**/solid/**/*'] }),
     tailwind(),
   ],
 
-  output: "server",
+  output: 'server',
   adapter: netlify({
     edgeMiddleware: true,
+    cacheOnDemandPages: true,
   }),
-});
+})
