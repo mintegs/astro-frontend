@@ -7,6 +7,13 @@ body {
 }
 /* #4f46e5 */
 
+.text-xxs {
+  font-size: 0.625rem; /* معادل 10px */
+}
+.text-tags {
+  font-size: 0.425rem; /* معادل 10px */
+}
+
 /* navbar */
 .navbar {
   @apply top-0 text-[#e9ecef] z-10 px-6 py-5 backdrop-blur flex items-center justify-between transition-colors duration-500 lg:z-50 bg-[#556ee6];
