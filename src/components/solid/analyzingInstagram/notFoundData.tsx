@@ -1,16 +1,18 @@
 export default function NotFoundData() {
   return (
     <>
-      <p class="text-gray-900 text-base">
-        It seems that there is no data available to display. This could be for several reasons:
+      <p class='text-gray-900 text-base'>
+        به نظر می‌رسد که داده‌ای برای نمایش وجود ندارد. این ممکن است به دلایل
+        مختلفی باشد:
       </p>
-      <ul class="space-y-1 text-gray-500 text-sm list-disc list-inside my-3">
-        <li>Everything is fine, and there is simply no data to display.</li>
-        <li>The file you uploaded has been tampered with.</li>
+      <ul class='space-y-1 text-gray-500 text-sm list-disc list-inside my-3'>
+        <li>صرفاً داده‌ای برای نمایش وجود ندارد.</li>
+        <li>فایلی که آپلود کرده‌اید دستکاری شده است.</li>
       </ul>
-      <p class="text-sm underline">
-        If you are sure the application is not working properly, please let us know so we can resolve it as quickly as possible.
+      <p class='text-sm underline'>
+        اگر مطمئن هستید که برنامه به درستی کار نمی‌کند، لطفاً به ما اطلاع دهید
+        تا بتوانیم آن را در سریع‌ترین زمان ممکن حل کنیم.
       </p>
     </>
-  );
+  )
 }

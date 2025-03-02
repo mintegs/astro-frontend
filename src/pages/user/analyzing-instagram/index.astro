@@ -1,32 +1,38 @@
 ---
-import RootLayout from "../../../layouts/rootLayout.astro"
-import AnalyzingInstagramFollowersForm from "../../../components/solid/analyzingInstagram/form"
+import RootLayout from '../../../layouts/rootLayout.astro'
+import AnalyzingInstagramFollowersForm from '../../../components/solid/analyzingInstagram/form'
 ---
-<RootLayout title="Analyzing Instagram Page" description="Analyzing Instagram page description">
-  <div class="p-2">
-    <h3 class="mb-3 pb-2 border-b text-lg font-semibold">
-      Followers and Following Analysis
+
+<RootLayout
+  title='Analyzing Instagram Page'
+  description='Analyzing Instagram page description'
+>
+  <div class='p-2'>
+    <h3 class='mb-3 pb-2 border-b text-lg font-semibold'>
+      تحلیل دنبال‌کنندگان و دنبال‌شدگان
     </h3>
-    <div class="text-gray-400">
-      <div class="flex items-center">
+    <div class='text-gray-400'>
+      <div class='flex items-center'>
         <svg
-          class="flex-shrink-0 w-4 h-4 me-2 text-gray-500"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 20"
+          class='flex-shrink-0 w-4 h-4 me-2 text-gray-500'
+          aria-hidden='true'
+          xmlns='http://www.w3.org/2000/svg'
+          fill='currentColor'
+          viewBox='0 0 20 20'
         >
-          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+          <path
+            d='M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z'
+          ></path>
         </svg>
-        <span class="sr-only">Description</span>
-        <h3 class="text-lg font-medium text-gray-500">
-          Notice
-        </h3>
+        <span class='sr-only'>توضیحات</span>
+        <h3 class='text-lg font-medium text-gray-500'>نکته</h3>
       </div>
-      <div class="mt-2 mb-4 text-sm text-gray-500">
-        The followers and following analysis section is only available for the Instagram platform. All uploaded files are processed instantly, and no data is transferred to our server.
+      <div class='mt-2 mb-4 text-sm text-gray-500'>
+        بخش تحلیل دنبال‌کنندگان و دنبال‌شدگان فقط برای پلتفرم اینستاگرام در
+        دسترس است. تمام فایل‌های بارگذاری شده به‌طور فوری پردازش می‌شوند و هیچ
+        داده‌ای به سرور ما منتقل نمی‌شود.
       </div>
     </div>
-    <AnalyzingInstagramFollowersForm client:only="solid-js" />
+    <AnalyzingInstagramFollowersForm client:only='solid-js' />
   </div>
 </RootLayout>
