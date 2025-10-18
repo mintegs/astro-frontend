@@ -20,7 +20,8 @@ export default function AnalyzingInstagramFollowersForm() {
 
   const parseJsonFile = async (
     file: JSZip.JSZipObject | null,
-    property?: string
+    property?: string,
+    fixUrl?: boolean
   ) => {
     if (!file) return []
     const content = await file.async('string')
@@ -28,7 +29,11 @@ export default function AnalyzingInstagramFollowersForm() {
     const dataArray =
       property && Array.isArray(json[property]) ? json[property] : json
     return Array.isArray(dataArray)
-      ? dataArray.map((item: any) => item['string_list_data'][0].href)
+      ? dataArray.map((item: any) =>
+          fixUrl
+            ? item['string_list_data'][0].href.replace('_u/', '')
+            : item['string_list_data'][0].href
+        )
       : []
   }
 
@@ -64,7 +69,8 @@ export default function AnalyzingInstagramFollowersForm() {
       )
       const following = await parseJsonFile(
         loadedZip.file('connections/followers_and_following/following.json'),
-        'relationships_following'
+        'relationships_following',
+        true
       )
       const hideStory = await parseJsonFile(
         loadedZip.file(
@@ -90,6 +96,9 @@ export default function AnalyzingInstagramFollowersForm() {
       setHideStoryData(hideStory)
       setPendingRequestsData(pendingRequests)
       setBlockData(block)
+
+      console.log('followers', followers.length)
+      console.log('following', following.length)
 
       const unFollowed = following.filter(
         (followingItem) => !followers.includes(followingItem)
