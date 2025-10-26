@@ -80,7 +80,7 @@ export default function InformationAnalyzingInstagramCard({
             <span class='font-bold'>{followersCount().length}</span>
           </p>
           <p class='text-sm mt-2'>
-            تعداد افرادی که شما را دنبال می‌کنید:{' '}
+            تعداد افرادی که شما آنها را دنبال می‌کنید:{' '}
             <span class='font-bold'>{followingCount().length}</span>
           </p>
           <p class='text-sm mt-2'>
@@ -88,7 +88,7 @@ export default function InformationAnalyzingInstagramCard({
             <span class='font-bold'>{noFollowCount().length}</span>
           </p>
           <p class='text-sm mt-2'>
-            تعداد افرادی که استوری شما را مخفی کرده‌اند:{' '}
+            تعداد افرادی که استوری شما ازشون مخفی کرده‌اند:{' '}
             <span class='font-bold'>{hideStoryCount().length}</span>
           </p>
           <p class='text-sm mt-2'>
