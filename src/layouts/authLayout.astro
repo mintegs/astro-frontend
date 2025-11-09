@@ -1,41 +1,61 @@
 ---
-import "../styles/index.css";
-import AuthOverlay from "../components/astro/layouts/auth/authOverlay.astro";
-import type { AuthLayout } from "../types";
-const { title, description, overlay } = Astro.props as AuthLayout;
+// import '../styles/global.css'
+import '../styles/index.css'
+import type { AuthLayout } from '../types'
+const { title, description, overlay } = Astro.props as AuthLayout
 ---
-<html lang="fa" dir="rtl">
+
+<html
+  lang='fa'
+  dir='rtl'
+>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content={description}>
+    <link
+      rel='stylesheet'
+      href='https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Vazirmatn:wght@100..900&display=swap'
+    />
+    <meta charset='utf-8' />
+    <meta
+      name='viewport'
+      content='width=device-width, initial-scale=1'
+    />
+    <meta
+      name='description'
+      content={description}
+    />
     <title>{title}</title>
   </head>
-  <body class="bg-[#f8f8fb] text-[#495057]">
+  <body class='bg-[#f8f8fb] text-[#495057]'>
     <div>
-      <div class="container-fluid p-0 min-h-screen flex">
-        <div class="grid grid-cols-12 gap-0 w-full min-h-screen">
-          <div class="md:col-span-5 lg:col-span-4 col-span-12 flex">
-            <div class="auth-full-page-content p-4 md:p-5 flex flex-col w-full min-h-screen">
-              <div class="flex flex-col flex-grow">
-                <div class="my-auto">
+      <div class='container-fluid p-0 min-h-screen flex'>
+        <div class='grid grid-cols-12 gap-0 w-full min-h-screen'>
+          <div class='md:col-span-5 lg:col-span-4 col-span-12 flex'>
+            <div
+              class='auth-full-page-content p-4 md:p-5 flex flex-col w-full min-h-screen'
+            >
+              <div class='flex flex-col flex-grow'>
+                <div class='my-auto'>
                   <slot />
                 </div>
               </div>
             </div>
           </div>
-          
-          <div class="md:col-span-7 lg:col-span-8 col-span-12 hidden md:flex flex-col min-h-screen">
-            <div class="relative auth-full-bg flex flex-col flex-grow min-h-screen">
-              <div class="absolute inset-0 bg-overlay"></div>
-              <div class="relative flex flex-col flex-grow">
-                <div class="my-auto">
-                  <div class="flex justify-center">
-                    <div class="lg:w-7/12">
-                      <div class="text-center">
+
+          <div
+            class='md:col-span-7 lg:col-span-8 col-span-12 hidden md:flex flex-col min-h-screen'
+          >
+            <div
+              class='relative auth-full-bg flex flex-col flex-grow min-h-screen'
+            >
+              <div class='absolute inset-0 bg-overlay'></div>
+              <div class='relative flex flex-col flex-grow'>
+                <div class='my-auto'>
+                  <div class='flex justify-center'>
+                    <div class='lg:w-7/12'>
+                      <div class='text-center'>
                         <div>
-                          <h5 class="text-white text-xl">{overlay.title}</h5>
-                          <p class="text-gray-200 mt-2">{overlay.content}</p>
+                          <h5 class='text-white text-xl'>{overlay.title}</h5>
+                          <p class='text-gray-200 mt-2'>{overlay.content}</p>
                         </div>
                       </div>
                     </div>
@@ -44,10 +64,8 @@ const { title, description, overlay } = Astro.props as AuthLayout;
               </div>
             </div>
           </div>
-          
         </div>
       </div>
-         
     </div>
   </body>
 </html>

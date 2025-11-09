@@ -1,19 +1,34 @@
 ---
-import "../styles/index.css";
-import Navbar from "../components/astro/layouts/navbar/index.astro"
+// import '../styles/global.css'
+import Navbar from '../components/astro/layouts/navbar/index.astro'
+import '../styles/index.css'
 
-const { title, description } = Astro.props;
+const { title, description } = Astro.props
 ---
-<html lang="fa" dir="rtl">
+
+<html
+  lang='fa'
+  dir='rtl'
+>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content={description}>
+    <link
+      rel='stylesheet'
+      href='https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Vazirmatn:wght@100..900&display=swap'
+    />
+    <meta charset='utf-8' />
+    <meta
+      name='viewport'
+      content='width=device-width, initial-scale=1'
+    />
+    <meta
+      name='description'
+      content={description}
+    />
     <title>{title}</title>
   </head>
   <body>
-    <Navbar/>
-    <div class="row p-6">
+    <Navbar />
+    <div class='row p-6'>
       <slot />
     </div>
   </body>

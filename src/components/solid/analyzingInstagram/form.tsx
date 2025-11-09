@@ -126,10 +126,10 @@ export default function AnalyzingInstagramFollowersForm() {
       {!hasData() && (
         <div
           onClick={focusInput}
-          class='w-full my-3 py-5 bg-gray-200 rounded-2xl border-2 gap-3 grid border-dashed cursor-pointer border-gray-500 group hover:border-[#556ee6]'
+          class='w-full my-3 py-5 bg-gray-200 rounded-2xl border-2 gap-3 grid border-dashed cursor-pointer border-gray-500 group hover:border-primary'
         >
           <div class='grid gap-1 justify-center'>
-            <div class='w-11 h-11 bg-gray-400 rounded-full flex items-center justify-center text-[#556ee6]'>
+            <div class='w-11 h-11 bg-gray-400 rounded-full flex items-center justify-center text-primary'>
               <svg
                 width={20}
                 height={20}
@@ -150,7 +150,7 @@ export default function AnalyzingInstagramFollowersForm() {
           <div class='grid gap-2'>
             <h4 class='text-center text-sm font-medium leading-snug'>
               فایل{' '}
-              <span class='bg-gray-400 text-[#556ee6] text-xs font-medium px-1.5 py-1 mx-1 rounded-full'>
+              <span class='bg-gray-400 text-primary text-xs font-medium px-1.5 py-1 mx-1 rounded-full'>
                 zip.
               </span>
               که از اینستاگرام دریافت کرده‌اید را انتخاب کنید
