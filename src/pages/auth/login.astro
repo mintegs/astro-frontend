@@ -1,25 +1,28 @@
 ---
-import AuthLayout from "../../layouts/authLayout.astro";
-import LoginForm from "../../components/react/auth/login/form";
+import LoginForm from '../../components/react/auth/login/form'
+import AuthLayout from '../../layouts/authLayout.astro'
 ---
-<AuthLayout 
-    title="ورود" 
-    description="ورود به مینتگس" 
-    overlay={{
-        title:"ورود به حساب کاربری",
-        content:"با ورود به حساب کاربری خود به تمامی امکانات وبسایت دسترسی پیدا کنید"
-    }}
+
+<AuthLayout
+  title='ورود'
+  description='ورود به مینتگس'
+  overlay={{
+    title: 'ورود به حساب کاربری',
+    content:
+      'با ورود به حساب کاربری خود به تمامی امکانات وبسایت دسترسی پیدا کنید',
+  }}
 >
-  <LoginForm client:only="react"/>
-  <div class="mt-5 text-center">
-      <p class="text-sm">
-      اگر حساب کاربری ندارید؟{" "}
+  <LoginForm client:only='react' />
+  <div class='mt-5 text-center'>
+    <p class='text-sm'>
+      اگر حساب کاربری ندارید؟{' '}
       <a
-          href="/register"
-          class="font-medium text-blue-600"
+        href='/auth/register'
+        class='font-medium text-blue-600'
       >
-          ثبت نام کنید
+        ثبت نام کنید
       </a>
-      </p>
+    </p>
   </div>
-</AuthLayout>   
+</AuthLayout>
+
