@@ -26,6 +26,7 @@ export default function AnalyzingInstagramFollowersForm() {
     if (!file) return []
     const content = await file.async('string')
     const json = JSON.parse(content)
+    
     const dataArray =
       property && Array.isArray(json[property]) ? json[property] : json
     return Array.isArray(dataArray)
@@ -35,6 +36,53 @@ export default function AnalyzingInstagramFollowersForm() {
             : item['string_list_data'][0].href
         )
       : []
+  }
+
+  const parseJsonFileForHideStory = async (
+    file: JSZip.JSZipObject | null,
+    property?: string,
+    fixUrl?: boolean
+  ) => {
+    if (!file) return []
+    const content = await file.async('string')
+    const json = JSON.parse(content)
+    
+    const dataArray =
+      property && Array.isArray(json[property]) ? json[property] : json
+    
+
+    return dataArray.map((item:any) => item.label_values[2].value)
+  }
+
+  const parseJsonFileForPendingRequest = async (
+    file: JSZip.JSZipObject | null,
+    property?: string,
+    fixUrl?: boolean
+  ) => {
+    if (!file) return []
+    const content = await file.async('string')
+    const json = JSON.parse(content)
+    
+    const dataArray =
+      property && Array.isArray(json[property]) ? json[property] : json
+
+    return dataArray.map((item:any) => item.label_values[2].value)
+  }
+
+  const parseJsonFileBlock = async (
+    file: JSZip.JSZipObject | null,
+    property?: string,
+    fixUrl?: boolean
+  ) => {
+    if (!file) return []
+    const content = await file.async('string')
+    const json = JSON.parse(content)
+    
+    const dataArray =
+      property && Array.isArray(json[property]) ? json[property] : json
+    
+
+    return dataArray.map((item:any) => item.label_values[2].value)
   }
 
   const resetData = () => {
@@ -67,24 +115,35 @@ export default function AnalyzingInstagramFollowersForm() {
       const followers = await parseJsonFile(
         loadedZip.file('connections/followers_and_following/followers_1.json')
       )
+
       const following = await parseJsonFile(
         loadedZip.file('connections/followers_and_following/following.json'),
         'relationships_following',
         true
       )
-      const hideStory = await parseJsonFile(
+
+      // const hideStory = await parseJsonFile(
+      //   loadedZip.file(
+      //     'connections/followers_and_following/hide_story_from.json'
+      //   ),
+      //   'relationships_hide_stories_from'
+      // )
+
+      const hideStory = await parseJsonFileForHideStory(
         loadedZip.file(
           'connections/followers_and_following/hide_story_from.json'
         ),
         'relationships_hide_stories_from'
       )
-      const pendingRequests = await parseJsonFile(
+      
+      const pendingRequests = await parseJsonFileForPendingRequest(
         loadedZip.file(
           'connections/followers_and_following/pending_follow_requests.json'
         ),
         'relationships_follow_requests_sent'
       )
-      const block = await parseJsonFile(
+
+      const block = await parseJsonFileBlock(
         loadedZip.file(
           'connections/followers_and_following/blocked_profiles.json'
         ),
@@ -105,6 +164,7 @@ export default function AnalyzingInstagramFollowersForm() {
       )
       setNoFollowData(unFollowed)
     } catch (error) {
+      console.log("error",error)
       setErrorMessage('Error extracting ZIP file.')
       resetData()
     }
