@@ -122,12 +122,9 @@ export default function AnalyzingInstagramFollowersForm() {
         true
       )
 
-      // const hideStory = await parseJsonFile(
-      //   loadedZip.file(
-      //     'connections/followers_and_following/hide_story_from.json'
-      //   ),
-      //   'relationships_hide_stories_from'
-      // )
+      console.log("followers", followers)
+      console.log("following", following)
+
 
       const hideStory = await parseJsonFileForHideStory(
         loadedZip.file(
@@ -156,12 +153,19 @@ export default function AnalyzingInstagramFollowersForm() {
       setPendingRequestsData(pendingRequests)
       setBlockData(block)
 
-      console.log('followers', followers.length)
-      console.log('following', following.length)
+      console.log('followers', followers)
+      console.log('following', following)
+
+      console.log('hideStory', hideStory)
+      console.log('pendingRequests', pendingRequests)
+      console.log('block', block)
+
 
       const unFollowed = following.filter(
         (followingItem) => !followers.includes(followingItem)
       )
+
+      console.log("unFollowed", unFollowed)
       setNoFollowData(unFollowed)
     } catch (error) {
       console.log("error",error)

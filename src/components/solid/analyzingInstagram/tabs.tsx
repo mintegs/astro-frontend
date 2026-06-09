@@ -86,7 +86,7 @@ export default function AnalyzingInstagramTabs({
                 {hideStory().map((item: string) => (
                   <li class='inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium'>
                     <span>
-                      {item.replace(/^https:\/\/www\.instagram\.com\//, '')}
+                      {`https://www.instagram.com/${item}`}
                     </span>
                     <a
                       href={item}
@@ -110,7 +110,7 @@ export default function AnalyzingInstagramTabs({
                 {pendingRequests().map((item: string) => (
                   <li class='inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium'>
                     <span>
-                      {item.replace(/^https:\/\/www\.instagram\.com\//, '')}
+                      {`https://www.instagram.com/${item}`}
                     </span>
                     <a
                       href={item}
@@ -134,7 +134,7 @@ export default function AnalyzingInstagramTabs({
                 {blockList().map((item: string) => (
                   <li class='inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium'>
                     <span>
-                      {item.replace(/^https:\/\/www\.instagram\.com\/_u\//, '')}
+                      {`https://www.instagram.com/${item}`}
                     </span>
                     <a
                       href={item}
