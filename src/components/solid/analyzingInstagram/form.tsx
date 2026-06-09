@@ -153,19 +153,11 @@ export default function AnalyzingInstagramFollowersForm() {
       setPendingRequestsData(pendingRequests)
       setBlockData(block)
 
-      console.log('followers', followers)
-      console.log('following', following)
-
-      console.log('hideStory', hideStory)
-      console.log('pendingRequests', pendingRequests)
-      console.log('block', block)
-
 
       const unFollowed = following.filter(
         (followingItem) => !followers.includes(followingItem)
       )
 
-      console.log("unFollowed", unFollowed)
       setNoFollowData(unFollowed)
     } catch (error) {
       console.log("error",error)
