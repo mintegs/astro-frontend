@@ -86,10 +86,10 @@ export default function AnalyzingInstagramTabs({
                 {hideStory().map((item: string) => (
                   <li class='inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium'>
                     <span>
-                      {`https://www.instagram.com/${item}`}
+                      {item}
                     </span>
                     <a
-                      href={item}
+                      href={`https://www.instagram.com/${item}`}
                       target='_blank'
                       class='py-1.5 px-3.5 text-xs bg-[#556ee6] hover:bg-[#3b53c9] text-white rounded-md font-medium leading-5 text-center shadow-xs transition-all duration-500'
                     >
@@ -110,10 +110,10 @@ export default function AnalyzingInstagramTabs({
                 {pendingRequests().map((item: string) => (
                   <li class='inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium'>
                     <span>
-                      {`https://www.instagram.com/${item}`}
+                      {item}
                     </span>
                     <a
-                      href={item}
+                      href={`https://www.instagram.com/${item}`}
                       target='_blank'
                       class='py-1.5 px-3.5 text-xs bg-[#556ee6] hover:bg-[#3b53c9] text-white rounded-md font-medium leading-5 text-center shadow-xs transition-all duration-500'
                     >
@@ -134,10 +134,10 @@ export default function AnalyzingInstagramTabs({
                 {blockList().map((item: string) => (
                   <li class='inline-flex items-center justify-between gap-x-2 py-3 text-sm font-medium'>
                     <span>
-                      {`https://www.instagram.com/${item}`}
+                      {item}
                     </span>
                     <a
-                      href={item}
+                      href={`https://www.instagram.com/${item}`}
                       target='_blank'
                       class='py-1.5 px-3.5 text-xs bg-[#556ee6] hover:bg-[#3b53c9] text-white rounded-md font-medium leading-5 text-center shadow-xs transition-all duration-500'
                     >
