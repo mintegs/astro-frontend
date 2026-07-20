@@ -1,4 +1,4 @@
-import { createSignal, onCleanup, type Accessor } from 'solid-js'
+import { createSignal, onCleanup, onMount, type Accessor } from 'solid-js'
 
 interface Props {
   followersCount: Accessor<string[]>
@@ -17,16 +17,20 @@ export default function InformationAnalyzingInstagramCard({
   pendingRequestsCount,
   blockCount,
 }: Props) {
-  const [isOpen, setIsOpen] = createSignal(window.innerWidth >= 768)
+  const [isOpen, setIsOpen] = createSignal(false)
 
-  const updateIsOpen = () => {
+  onMount(() => {
     setIsOpen(window.innerWidth >= 768)
-  }
 
-  window.addEventListener('resize', updateIsOpen)
+    const updateIsOpen = () => {
+      setIsOpen(window.innerWidth >= 768)
+    }
 
-  onCleanup(() => {
-    window.removeEventListener('resize', updateIsOpen)
+    window.addEventListener('resize', updateIsOpen)
+
+    onCleanup(() => {
+      window.removeEventListener('resize', updateIsOpen)
+    })
   })
 
   return (
@@ -34,9 +38,10 @@ export default function InformationAnalyzingInstagramCard({
       <div
         onclick={() => setIsOpen(!isOpen())}
         class='w-full text-left text-lg font-semibold flex justify-between items-center cursor-pointer'
+        style={{ color: 'var(--gh-fg)' }}
       >
         <span>اطلاعات تکمیلی</span>
-        <span>
+        <span style={{ color: 'var(--gh-fg-muted)' }}>
           {isOpen() ? (
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -72,33 +77,33 @@ export default function InformationAnalyzingInstagramCard({
       </div>
       {isOpen() && (
         <div class='md:h-48 h-auto'>
-          <p class='text-base mt-2'>
+          <p class='text-base mt-2' style={{ color: 'var(--gh-fg-secondary)' }}>
             بر اساس داده‌های اینستاگرام ارائه‌شده از طریق فایل:
           </p>
-          <p class='text-sm mt-2'>
+          <p class='text-sm mt-2' style={{ color: 'var(--gh-fg-secondary)' }}>
             تعداد دنبال‌کنندگان شما:{' '}
-            <span class='font-bold'>{followersCount().length}</span>
+            <span class='font-bold' style={{ color: 'var(--gh-fg)' }}>{followersCount().length}</span>
           </p>
-          <p class='text-sm mt-2'>
+          <p class='text-sm mt-2' style={{ color: 'var(--gh-fg-secondary)' }}>
             تعداد افرادی که شما آنها را دنبال می‌کنید:{' '}
-            <span class='font-bold'>{followingCount().length}</span>
+            <span class='font-bold' style={{ color: 'var(--gh-fg)' }}>{followingCount().length}</span>
           </p>
-          <p class='text-sm mt-2'>
+          <p class='text-sm mt-2' style={{ color: 'var(--gh-fg-secondary)' }}>
             تعداد افرادی که شما را دنبال نکرده‌اند:{' '}
-            <span class='font-bold'>{noFollowCount().length}</span>
+            <span class='font-bold' style={{ color: 'var(--gh-fg)' }}>{noFollowCount().length}</span>
           </p>
-          <p class='text-sm mt-2'>
+          <p class='text-sm mt-2' style={{ color: 'var(--gh-fg-secondary)' }}>
             تعداد افرادی که استوری شما ازشون مخفی کرده‌اند:{' '}
-            <span class='font-bold'>{hideStoryCount().length}</span>
+            <span class='font-bold' style={{ color: 'var(--gh-fg)' }}>{hideStoryCount().length}</span>
           </p>
-          <p class='text-sm mt-2'>
+          <p class='text-sm mt-2' style={{ color: 'var(--gh-fg-secondary)' }}>
             تعداد افرادی که به آنها درخواست ارسال کرده‌اید اما هنوز قبول
             نکرده‌اند:{' '}
-            <span class='font-bold'>{pendingRequestsCount().length}</span>
+            <span class='font-bold' style={{ color: 'var(--gh-fg)' }}>{pendingRequestsCount().length}</span>
           </p>
-          <p class='text-sm mt-2'>
+          <p class='text-sm mt-2' style={{ color: 'var(--gh-fg-secondary)' }}>
             تعداد افرادی که شما آنها را بلاک کرده‌اید:{' '}
-            <span class='font-bold'>{blockCount().length}</span>
+            <span class='font-bold' style={{ color: 'var(--gh-fg)' }}>{blockCount().length}</span>
           </p>
         </div>
       )}

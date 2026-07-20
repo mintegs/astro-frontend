@@ -14,15 +14,15 @@ import AuthLayout from '../../layouts/authLayout.astro'
 >
   <LoginForm client:only='react' />
   <div class='mt-5 text-center'>
-    <p class='text-sm'>
+    <p class='text-sm' style={{ color: 'var(--gh-fg)' }}>
       اگر حساب کاربری ندارید؟{' '}
       <a
         href='/auth/register'
-        class='font-medium text-blue-600'
+        class='font-medium'
+        style={{ color: 'var(--gh-accent-fg)' }}
       >
         ثبت نام کنید
       </a>
     </p>
   </div>
 </AuthLayout>
-

@@ -15,8 +15,8 @@ export default function Input({
   return (
     <>
       {withLabel && label ? (
-        <label htmlFor={name} className='block mb-2'>
-          <span className='text-base font-medium capitalize'>{label}</span>
+        <label htmlFor={name} className='block mb-1.5 text-sm font-medium text-fg'>
+          <span>{label}</span>
         </label>
       ) : null}
       <Field
@@ -31,7 +31,7 @@ export default function Input({
       />
       <ErrorMessage name={name}>
         {(msg: string) => (
-          <span className='text-red-500 text-sm pt-1 block'>{msg}</span>
+          <span className='text-danger text-xs pt-1 block'>{msg}</span>
         )}
       </ErrorMessage>
     </>

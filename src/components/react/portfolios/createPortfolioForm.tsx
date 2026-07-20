@@ -19,14 +19,14 @@ export default function CreatePortfolioForm() {
               disabled={!(dirty && isValid)}
               loading={isSubmitting}
               block={false}
-              color="bg-[#556ee6]"
+              color="btn-primary"
               type="button"
             >
               ثبت
             </Button>
           </div>
           <div className="w-full my-2">
-            <p className="text-sm">
+            <p className="text-sm" style={{ color: 'var(--gh-fg-muted)' }}>
               کاراکتر ({values.title.length}/25)
             </p>
           </div>

@@ -3,13 +3,14 @@ import CreatePortfolio from "../../../components/react/portfolios/createPortfoli
 import RootLayout from "../../../layouts/rootLayout.astro"
 ---
 <RootLayout title="portfolios page" description="portfolios page description">
-	<h3 class="mb-3 pb-2 border-b text-lg font-semibold">
+	<h3 class="mb-3 pb-2 border-b text-lg font-semibold" style={{ color: 'var(--gh-fg)' }}>
         سبدهای سرمایه گذاری
     </h3>
-	<div class="text-gray-400">
+	<div style={{ color: 'var(--gh-fg-secondary)' }}>
 		<div class="flex items-center">
 			<svg
-				class="flex-shrink-0 w-4 h-4 me-2 text-gray-500"
+				class="flex-shrink-0 w-4 h-4 me-2"
+				style={{ color: 'var(--gh-fg-muted)' }}
 				aria-hidden="true"
 				xmlns="http://www.w3.org/2000/svg"
 				fill="currentColor"
@@ -18,11 +19,11 @@ import RootLayout from "../../../layouts/rootLayout.astro"
 				<path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
 			</svg>
 			<span class="sr-only">توضیحات</span>
-			<h3 class="text-lg font-medium text-gray-500">
+			<h3 class="text-lg font-medium" style={{ color: 'var(--gh-fg-muted)' }}>
 				توضیحات
 			</h3>
 		</div>
-		<div class="mt-2 mb-4 text-sm text-gray-500">
+		<div class="mt-2 mb-4 text-sm" style={{ color: 'var(--gh-fg-muted)' }}>
 			معاملات رمز ارزی خود را به سبد سرمایه گذاری اضافه کنید تا به توانید به
 			راحتی دارایی‌ها، عملکرد و سود و زیان خود را پیگیری کنید.
 		</div>
@@ -31,8 +32,8 @@ import RootLayout from "../../../layouts/rootLayout.astro"
 		<CreatePortfolio client:only="react"/>
 		<div class="col-span-3">
 			<div class="grid grid-cols-3 gap-4 items-center">
-				<div class="relative max-w-xs card cursor-pointer text-center group hover:bg-[#556ee6]">
-					<h4 class="text-sm font-medium leading-snug mb-2 group-hover:text-white">
+				<div class="relative max-w-xs card card-hover cursor-pointer text-center group">
+					<h4 class="text-sm font-medium leading-snug mb-2" style={{ color: 'var(--gh-fg)' }}>
 						سبد پر ریسک
 					</h4>
 				</div>

@@ -5,8 +5,8 @@ import type { AuthLayout } from '../types'
 const { title, description, overlay } = Astro.props as AuthLayout
 ---
 
-<BaseLayout title={title} description={description} bodyClass='bg-[#f8f8fb] text-[#495057]'>
-  <div class='container-fluid p-0 min-h-screen flex'>
+<BaseLayout title={title} description={description}>
+  <div class='min-h-screen flex'>
     <div class='grid grid-cols-12 gap-0 w-full min-h-screen'>
       <div class='md:col-span-5 lg:col-span-4 col-span-12 flex'>
         <div

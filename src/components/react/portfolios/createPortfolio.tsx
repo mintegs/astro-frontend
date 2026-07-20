@@ -11,10 +11,13 @@ export default function CreatePortfolio() {
     <>
       <div
         onClick={() => setModal(true)}
-        className="relative max-w-xs card border-2 border-dashed cursor-pointer text-center group border-gray-500 hover:border-[#556ee6]"
+        className="relative max-w-xs card border-2 border-dashed cursor-pointer text-center group transition-colors duration-150"
+        style={{ borderColor: 'var(--gh-border)' }}
+        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--gh-accent)' }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--gh-border)' }}
       >
         <div className="mb-6 flex items-center justify-center">
-          <div className="h-11 w-11 rounded-full flex justify-center items-center bg-gray-400 text-[#556ee6]">
+          <div className="h-11 w-11 rounded-full flex justify-center items-center" style={{ backgroundColor: 'var(--gh-bg-muted)', color: 'var(--gh-accent-emphasis)' }}>
             <svg
               width={20}
               height={20}
@@ -32,7 +35,7 @@ export default function CreatePortfolio() {
             </svg>
           </div>
         </div>
-        <h4 className="text-sm font-medium leading-snug mb-2">
+        <h4 className="text-sm font-medium leading-snug mb-2" style={{ color: 'var(--gh-fg)' }}>
           ایجاد سبد سرمایه گذاری
         </h4>
       </div>

@@ -4,23 +4,21 @@ import type { ButtonProps } from '../../../types';
 export default function Button({
   children,
   type = undefined,
-  color = 'bg-blue-600',
+  color = 'btn-primary',
   disabled = false,
   block = true,
   loading = false,
 }: ButtonProps) {
   return (
     <button
-      className={`${disabled ? 'cursor-not-allowed bg-gray-600' : ''} ${
-        block ? 'w-full' : ''
-      } ${color} text-center py-2 px-4 text-white rounded-lg`}
+      className={`${block ? 'w-full' : ''} ${color} text-center py-1.5 px-4 text-sm font-medium rounded-md`}
       type={type}
       disabled={disabled}
     >
       <div className='inline-flex items-center'>
         {loading && (
           <svg
-            className='animate-spin ml-3 h-5 w-5 text-white'
+            className='animate-spin ml-2 h-4 w-4 text-current'
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'

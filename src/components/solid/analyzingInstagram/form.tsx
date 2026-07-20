@@ -69,10 +69,27 @@ export default function AnalyzingInstagramFollowersForm() {
       {!hasData() && (
         <div
           onClick={focusInput}
-          class='w-full my-3 py-5 bg-gray-200 rounded-2xl border-2 gap-3 grid border-dashed cursor-pointer border-gray-500 group hover:border-primary'
+          class='w-full my-3 py-5 rounded-lg border-2 gap-3 grid border-dashed cursor-pointer group transition-colors duration-150'
+          style={{
+            'background-color': 'var(--gh-bg-subtle)',
+            'border-color': 'var(--gh-border)',
+            color: 'var(--gh-fg-secondary)',
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.borderColor = 'var(--gh-accent)'
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.borderColor = 'var(--gh-border)'
+          }}
         >
           <div class='grid gap-1 justify-center'>
-            <div class='w-11 h-11 bg-gray-400 rounded-full flex items-center justify-center text-primary'>
+            <div
+              class='w-11 h-11 rounded-full flex items-center justify-center'
+              style={{
+                'background-color': 'var(--gh-bg-muted)',
+                color: 'var(--gh-fg-secondary)',
+              }}
+            >
               <svg
                 width={20}
                 height={20}
@@ -93,7 +110,13 @@ export default function AnalyzingInstagramFollowersForm() {
           <div class='grid gap-2'>
             <h4 class='text-center text-sm font-medium leading-snug'>
               فایل{' '}
-              <span class='bg-gray-400 text-primary text-xs font-medium px-1.5 py-1 mx-1 rounded-full'>
+              <span
+                class='text-xs font-medium px-1.5 py-1 mx-1 rounded-full'
+                style={{
+                  'background-color': 'var(--gh-bg-muted)',
+                  color: 'var(--gh-fg)',
+                }}
+              >
                 zip.
               </span>
               که از اینستاگرام دریافت کرده‌اید را انتخاب کنید
