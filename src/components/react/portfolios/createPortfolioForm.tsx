@@ -9,7 +9,7 @@ export default function CreatePortfolioForm() {
       initialValues={{
         title: "",
       }}
-      onSubmit={async (values, { setSubmitting, resetForm }) => {}}
+      onSubmit={async () => {}}
     >
       {({ dirty, isValid, isSubmitting, values }) => (
         <Form className="w-full">

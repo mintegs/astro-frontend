@@ -23,7 +23,7 @@ export default function LoginForm() {
         setSubmitting(true);
 
         // Using connectAPI function
-        const [error, data] = await connectAPI(
+        const [error] = await connectAPI(
           "http://localhost:8080/v1/auth/login",
           {
             method: "POST",

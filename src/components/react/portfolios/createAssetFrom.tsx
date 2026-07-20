@@ -14,9 +14,9 @@ export default function CreateAssetForm() {
         dateSell: new Date().toISOString(),
         sellTarget: 20
       }}
-      onSubmit={async (values, { setSubmitting, resetForm }) => {}}
+      onSubmit={async () => {}}
     >
-      {({ dirty, isValid, isSubmitting, values }) => (
+      {({ dirty, isValid, isSubmitting }) => (
         <Form className="w-full">
             <div className="w-full mb-3">
                 <Input name="title" label="عنوان" withLabel />

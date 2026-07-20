@@ -1,5 +1,5 @@
 /** @jsxImportSource react */
-import { type ReactNode } from "react";
+
 
 interface Props {
   close: () => void;

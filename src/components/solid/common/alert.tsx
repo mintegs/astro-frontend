@@ -1,4 +1,4 @@
-import { createEffect } from "solid-js";
+import { createEffect, onCleanup } from "solid-js";
 
 interface Alert {
   message: string;
@@ -13,12 +13,13 @@ export default function Alert({
   duration = 3000,
   onClose,
 }: Alert) {
+  let timer: ReturnType<typeof setTimeout>;
   createEffect(() => {
-    const timer = setTimeout(() => {
+    timer = setTimeout(() => {
       if (onClose) onClose();
     }, duration);
-    return () => clearTimeout(timer);
-  }, [onClose]);
+  });
+  onCleanup(() => clearTimeout(timer));
 
   return (
     <>

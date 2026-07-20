@@ -40,8 +40,7 @@ export default function AnalyzingInstagramFollowersForm() {
 
   const parseJsonFileForHideStory = async (
     file: JSZip.JSZipObject | null,
-    property?: string,
-    fixUrl?: boolean
+    property?: string
   ) => {
     if (!file) return []
     const content = await file.async('string')
@@ -56,8 +55,7 @@ export default function AnalyzingInstagramFollowersForm() {
 
   const parseJsonFileForPendingRequest = async (
     file: JSZip.JSZipObject | null,
-    property?: string,
-    fixUrl?: boolean
+    property?: string
   ) => {
     if (!file) return []
     const content = await file.async('string')
@@ -71,8 +69,7 @@ export default function AnalyzingInstagramFollowersForm() {
 
   const parseJsonFileBlock = async (
     file: JSZip.JSZipObject | null,
-    property?: string,
-    fixUrl?: boolean
+    property?: string
   ) => {
     if (!file) return []
     const content = await file.async('string')
