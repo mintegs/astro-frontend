@@ -1,11 +1,17 @@
 import { createEffect, createSignal } from 'solid-js'
-import { parseInstagramZip, validateInstagramData, type InstagramData } from '../../../utils/instagram'
-import Alert from '../common/alert'
+import {
+    parseInstagramZip,
+    validateInstagramData,
+    type InstagramData,
+} from '../../../utils/instagram'
+import { createDialog } from '../common/createDialog'
 import InformationAnalyzingInstagramCard from './informationCard'
 import AnalyzingInstagramTabs from './tabs'
 
 export default function AnalyzingInstagramFollowersForm() {
   let fileInputRef: HTMLInputElement | undefined
+
+  const { showDialog } = createDialog()
 
   const [data, setData] = createSignal<InstagramData>({
     followers: [],
@@ -15,7 +21,6 @@ export default function AnalyzingInstagramFollowersForm() {
     pendingRequests: [],
     blocked: [],
   })
-  const [errorMessage, setErrorMessage] = createSignal<string | null>(null)
   const [hasData, setHasData] = createSignal(false)
 
   const resetData = () => {
@@ -37,10 +42,15 @@ export default function AnalyzingInstagramFollowersForm() {
 
     if (!file) return
 
-    setErrorMessage(null)
-
     if (file.type !== 'application/zip') {
-      setErrorMessage('Please upload a valid ZIP file.')
+      showDialog({
+        title: 'فایل نامعتبر',
+        description:
+          'لطفاً یک فایل ZIP معتبر صادر شده از اینستاگرام بارگذاری کنید.',
+        variant: 'error',
+        actionLabel: 'تلاش مجدد',
+        onAction: () => focusInput(),
+      })
       input.value = ''
       return
     }
@@ -49,7 +59,13 @@ export default function AnalyzingInstagramFollowersForm() {
       const parsedData = await parseInstagramZip(file)
       const error = validateInstagramData(parsedData)
       if (error) {
-        setErrorMessage(error)
+        showDialog({
+          title: 'آرشیو اینستاگرام نامعتبر',
+          description: error,
+          variant: 'error',
+          actionLabel: 'تلاش مجدد',
+          onAction: () => focusInput(),
+        })
         resetData()
       } else {
         setData(parsedData)
@@ -57,7 +73,13 @@ export default function AnalyzingInstagramFollowersForm() {
       input.value = ''
     } catch (error) {
       console.error('Error extracting ZIP file:', error)
-      setErrorMessage('The uploaded archive appears to be empty or unsupported.')
+      showDialog({
+        title: 'خواندن آرشیو ممکن نیست',
+        description: 'آرشیو بارگذاری‌شده خالی یا پشتیبانی‌نشده به نظر می‌رسد.',
+        variant: 'error',
+        actionLabel: 'تلاش مجدد',
+        onAction: () => focusInput(),
+      })
       resetData()
       input.value = ''
     }
@@ -147,14 +169,6 @@ export default function AnalyzingInstagramFollowersForm() {
             </div>
           </div>
         </div>
-      )}
-
-      {errorMessage() && (
-        <Alert
-          message={errorMessage() as string}
-          type='danger'
-          onClose={() => setErrorMessage(null)}
-        />
       )}
 
       {hasData() && (

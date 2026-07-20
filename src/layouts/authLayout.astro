@@ -31,10 +31,10 @@ const { title, description, overlay } = Astro.props as AuthLayout
             <div class='my-auto'>
               <div class='flex justify-center'>
                 <div class='lg:w-7/12'>
-                  <div class='text-center'>
+                  <div class='text-center overlay-content'>
                     <div>
-                      <h5 class='text-white text-xl'>{overlay.title}</h5>
-                      <p class='text-gray-200 mt-2'>{overlay.content}</p>
+                      <h5 class='text-xl overlay-title'>{overlay.title}</h5>
+                      <p class='mt-2 overlay-desc'>{overlay.content}</p>
                     </div>
                   </div>
                 </div>

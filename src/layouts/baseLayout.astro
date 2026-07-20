@@ -1,5 +1,6 @@
 ---
 import '../styles/index.css'
+import ErrorDialog from '../components/react/common/ErrorDialog';
 
 interface Props {
   title: string;
@@ -42,5 +43,7 @@ const { title, description, class: htmlClass, bodyClass } = Astro.props
   </head>
   <body class={bodyClass}>
     <slot />
+
+    <ErrorDialog client:load />
   </body>
 </html>

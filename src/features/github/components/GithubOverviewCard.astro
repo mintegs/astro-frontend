@@ -1,0 +1,89 @@
+---
+import type { GithubProfile } from '../types'
+
+interface Props {
+  profile: GithubProfile
+}
+
+const { profile } = Astro.props
+
+const joinedDate = new Date(profile.createdAt)
+const now = new Date()
+const yearsActive = now.getFullYear() - joinedDate.getFullYear()
+const joinMonth = joinedDate.toLocaleDateString('fa-IR', { month: 'long', year: 'numeric' })
+
+const stats = [
+  { label: 'مخازن', value: profile.repositories },
+  { label: 'دنبال‌کنندگان', value: profile.followers },
+  { label: 'دنبال‌شونده‌ها', value: profile.following },
+  { label: 'سابقه', value: `${yearsActive} سال` },
+]
+---
+
+<div class='overview-stats'>
+  {stats.map((stat) => (
+    <div class='overview-stat-item'>
+      <div class='overview-stat-value'>{typeof stat.value === 'number' ? stat.value.toLocaleString() : stat.value}</div>
+      <div class='overview-stat-label'>{stat.label}</div>
+    </div>
+  ))}
+</div>
+
+<div class='overview-joined'>
+  <span class='overview-joined-icon'>📅</span>
+  <span class='overview-joined-text'>عضو از {joinMonth}</span>
+</div>
+
+<style>
+  .overview-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .overview-stat-item {
+    padding: 12px;
+    border-radius: 6px;
+    background-color: var(--gh-bg-subtle);
+    border: 1px solid var(--gh-border-muted);
+    text-align: center;
+    transition: border-color 0.15s ease;
+  }
+
+  .overview-stat-item:hover {
+    border-color: var(--gh-border);
+  }
+
+  .overview-stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gh-fg);
+    line-height: 1.2;
+  }
+
+  .overview-stat-label {
+    font-size: 0.75rem;
+    color: var(--gh-fg-muted);
+    margin-top: 4px;
+  }
+
+  .overview-joined {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background-color: var(--gh-bg-subtle);
+    border: 1px solid var(--gh-border-muted);
+  }
+
+  .overview-joined-icon {
+    font-size: 1rem;
+  }
+
+  .overview-joined-text {
+    font-size: 0.8125rem;
+    color: var(--gh-fg-secondary);
+  }
+</style>

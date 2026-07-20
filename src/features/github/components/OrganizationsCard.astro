@@ -1,0 +1,76 @@
+---
+import type { Organization } from '../types'
+
+interface Props {
+  organizations: Organization[]
+}
+
+const { organizations } = Astro.props
+---
+
+<div class='orgs-list'>
+  {organizations.map((org) => (
+    <a href={org.url} class='org-item' rel='noopener noreferrer'>
+      <div class='org-avatar'>{org.avatar}</div>
+      <div class='org-info'>
+        <div class='org-name'>{org.displayName}</div>
+        <div class='org-role'>{org.role}</div>
+      </div>
+    </a>
+  ))}
+</div>
+
+<style>
+  .orgs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .org-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--gh-border-muted);
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .org-item:hover {
+    border-color: var(--gh-border);
+    background-color: var(--gh-bg-subtle);
+  }
+
+  .org-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    background-color: var(--gh-bg-subtle);
+    border: 1px solid var(--gh-border-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .org-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .org-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--gh-fg);
+    line-height: 1.3;
+  }
+
+  .org-role {
+    font-size: 0.75rem;
+    color: var(--gh-fg-muted);
+  }
+</style>

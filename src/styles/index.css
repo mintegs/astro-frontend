@@ -178,7 +178,9 @@ body {
   color: var(--gh-fg);
   margin: 0;
   padding: 0;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 ::selection {
@@ -207,7 +209,9 @@ body {
   background-color: var(--gh-surface);
   color: var(--gh-fg);
   border-bottom: 1px solid var(--gh-border);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .search-box {
@@ -220,7 +224,9 @@ body {
   color: var(--gh-fg);
   outline: none;
   font-size: 0.875rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .search-box::placeholder {
   color: var(--gh-fg-muted);
@@ -239,14 +245,18 @@ body {
   padding-top: 0;
   background-color: var(--gh-surface);
   border-bottom: 1px solid var(--gh-border);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 .sub-navbar-item {
   padding: 0.75rem 0.5rem;
   border-bottom: 2px solid transparent;
   color: var(--gh-fg-secondary);
   font-size: 0.875rem;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 .sub-navbar-item:hover {
   color: var(--gh-fg);
@@ -274,6 +284,48 @@ body {
   background-color: var(--gh-bg-muted);
 }
 
+/* Overlay content colors — use theme tokens for reliable contrast */
+.auth-full-bg .overlay-content {
+  /* ensures children inherit appropriate color tokens */
+}
+.auth-full-bg .overlay-content .overlay-title {
+  color: var(--gh-fg); /* primary text color */
+  font-weight: 600;
+}
+.auth-full-bg .overlay-content .overlay-desc {
+  color: var(--gh-fg-secondary); /* secondary text */
+  line-height: 1.6;
+}
+
+/* Links, helper text, labels and buttons inside overlay */
+.auth-full-bg .overlay-content a {
+  color: var(--gh-accent);
+  text-decoration: underline;
+}
+.auth-full-bg .overlay-content a:hover {
+  color: var(--gh-link-hover);
+}
+.auth-full-bg .overlay-content .helper-text,
+.auth-full-bg .overlay-content .label {
+  color: var(--gh-fg-muted);
+}
+
+.auth-full-bg .overlay-content .btn-primary {
+  background-color: var(--gh-accent-emphasis) !important;
+  color: #fff !important;
+  border-color: rgba(27,31,36,0.12) !important;
+}
+.auth-full-bg .overlay-content .btn-secondary {
+  color: var(--gh-fg) !important;
+  border-color: var(--gh-border) !important;
+}
+
+/* Ensure placeholders maintain contrast */
+.auth-full-bg .overlay-content ::placeholder {
+  color: var(--gh-fg-muted);
+  opacity: 1;
+}
+
 /* ========================= */
 /* Forms */
 .form-input {
@@ -285,17 +337,40 @@ body {
   color: var(--gh-fg);
   font-size: 0.875rem;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .form-input::placeholder {
   color: var(--gh-fg-muted);
 }
-.form-input:focus {
+.form-input:focus,
+textarea:focus,
+select:focus,
+input[type='file']:focus,
+.search-input:focus {
   border-color: var(--gh-accent);
-  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.3);
+  /* Thin accent border + subtle ring using theme color */
+  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.08);
+  outline: none;
 }
-[data-theme='dark'] .form-input:focus {
-  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+
+[data-theme='dark'] .form-input:focus,
+[data-theme='dark'] textarea:focus,
+[data-theme='dark'] select:focus,
+[data-theme='dark'] input[type='file']:focus,
+[data-theme='dark'] .search-input:focus {
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.10);
+  border-color: var(--gh-accent);
+}
+
+/* Avoid double outline from global *:focus-visible for form controls — prefer thin border + soft ring */
+.form-input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+input[type='file']:focus-visible,
+.search-input:focus-visible {
+  outline: none;
 }
 .form-input.invalid {
   border-color: var(--gh-danger);
@@ -411,7 +486,9 @@ body {
   padding: 1rem;
   border-radius: 6px;
   border: 1px solid var(--gh-border);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 /* ========================= */
@@ -427,6 +504,26 @@ body {
 }
 .btn-primary:disabled {
   background-color: var(--gh-bg-muted);
+  color: var(--gh-fg-muted);
+  border-color: var(--gh-border);
+  cursor: not-allowed;
+}
+
+/* Secondary / ghost button used across the app */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--gh-fg);
+  border: 1px solid var(--gh-border);
+  transition:
+    background-color 0.12s ease,
+    color 0.12s ease,
+    border-color 0.12s ease;
+}
+.btn-secondary:hover {
+  background-color: var(--gh-bg-subtle);
+}
+.btn-secondary:disabled {
+  background-color: transparent;
   color: var(--gh-fg-muted);
   border-color: var(--gh-border);
   cursor: not-allowed;
@@ -487,7 +584,9 @@ body {
   color: var(--gh-fg);
   font-size: 0.875rem;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 .search-input::placeholder {
   color: var(--gh-fg-muted);
@@ -509,7 +608,53 @@ body {
 .theme-transition *,
 .theme-transition *::before,
 .theme-transition *::after {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease !important;
+}
+
+/* ========================= */
+/* Bento Grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
+}
+
+.bento-card[data-layout='large'] { grid-column: span 8; }
+.bento-card[data-layout='medium'] { grid-column: span 4; }
+.bento-card[data-layout='small'] { grid-column: span 4; }
+.bento-card[data-layout='half'] { grid-column: span 6; }
+
+@media (max-width: 1024px) {
+  .bento-card[data-layout='large'] { grid-column: span 8; }
+  .bento-card[data-layout='medium'] { grid-column: span 6; }
+  .bento-card[data-layout='small'] { grid-column: span 6; }
+  .bento-card[data-layout='half'] { grid-column: span 6; }
+}
+
+@media (max-width: 640px) {
+  .bento-card[data-layout] { grid-column: 1 / -1; }
+}
+
+/* ========================= */
+/* Contribution Grid Theme Colors */
+:root,
+[data-theme='light'] {
+  --contrib-0: #ebedf0;
+  --contrib-1: #9be9a8;
+  --contrib-2: #40c463;
+  --contrib-3: #30a14e;
+  --contrib-4: #216e39;
+}
+[data-theme='dark'] {
+  --contrib-0: #161b22;
+  --contrib-1: #0e4429;
+  --contrib-2: #006d32;
+  --contrib-3: #26a641;
+  --contrib-4: #39d353;
 }
 
 /* ========================= */

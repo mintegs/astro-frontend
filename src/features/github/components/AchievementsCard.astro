@@ -1,0 +1,80 @@
+---
+import type { Achievement } from '../types'
+
+interface Props {
+  achievements: Achievement[]
+}
+
+const { achievements } = Astro.props
+
+const tierColors: Record<string, { bg: string; border: string; glow: string }> = {
+  gold: { bg: 'rgba(210, 153, 34, 0.08)', border: 'rgba(210, 153, 34, 0.3)', glow: 'rgba(210, 153, 34, 0.15)' },
+  silver: { bg: 'rgba(139, 148, 158, 0.08)', border: 'rgba(139, 148, 158, 0.3)', glow: 'rgba(139, 148, 158, 0.15)' },
+  bronze: { bg: 'rgba(187, 128, 9, 0.08)', border: 'rgba(187, 128, 9, 0.3)', glow: 'rgba(187, 128, 9, 0.15)' },
+}
+---
+
+<div class='achievements-grid'>
+  {achievements.map((achievement) => {
+    const tier = tierColors[achievement.tier]
+    return (
+      <div
+        class='achievement-item'
+        style={`background-color: ${tier.bg}; border-color: ${tier.border}`}
+      >
+        <div class='achievement-icon'>{achievement.icon}</div>
+        <div class='achievement-info'>
+          <div class='achievement-name'>{achievement.name}</div>
+          <div class='achievement-desc'>{achievement.description}</div>
+        </div>
+      </div>
+    )
+  })}
+</div>
+
+<style>
+  .achievements-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid;
+    transition: transform 0.12s ease;
+  }
+
+  .achievement-item:hover {
+    transform: translateY(-1px);
+  }
+
+  .achievement-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .achievement-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .achievement-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--gh-fg);
+    line-height: 1.3;
+  }
+
+  .achievement-desc {
+    font-size: 0.6875rem;
+    color: var(--gh-fg-muted);
+    line-height: 1.3;
+  }
+</style>

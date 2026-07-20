@@ -1,17 +1,15 @@
 /** @jsxImportSource react */
-import { Form, Formik } from 'formik';
-import { useState } from 'react';
-import { registerSchema } from '../../../../utils/validation/schemas/authSchema';
-import { connectAPI } from '../../../../utils/api/connectApi';
-import { convertMessage } from '../../../../utils/messages';
-import { API_ENDPOINTS } from '../../../../config';
-import type { AlertProps } from '../../../../types';
-import Input from '../../common/input';
-import Button from '../../common/button';
-import Alert from '../../common/alert';
+import { Form, Formik } from 'formik'
+import { API_ENDPOINTS } from '../../../../config'
+import { connectAPI } from '../../../../utils/api/connectApi'
+import { convertMessage } from '../../../../utils/messages'
+import { registerSchema } from '../../../../utils/validation/schemas/authSchema'
+import Button from '../../common/button'
+import Input from '../../common/input'
+import { useDialog } from '../../common/useDialog'
 
 export default function RegisterForm() {
-  const [alert, setAlert] = useState<AlertProps | null>(null);
+  const { showDialog } = useDialog()
 
   return (
     <Formik
@@ -22,27 +20,29 @@ export default function RegisterForm() {
       }}
       validationSchema={registerSchema}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
-        setSubmitting(true);
+        setSubmitting(true)
 
         const [error] = await connectAPI(API_ENDPOINTS.AUTH.REGISTER, {
           method: 'POST',
           body: { ...values },
-        });
+        })
 
         if (error) {
-          setAlert({
-            message: convertMessage(error.message),
-            type: 'danger',
-          });
+          showDialog({
+            title: 'خطا در ثبت‌نام',
+            description: convertMessage(error.message),
+            variant: 'error',
+          })
         } else {
-          setAlert({
-            message: 'ثبت نام شما باموفقیت انجام شد',
-            type: 'success',
-          });
-          resetForm();
+          showDialog({
+            title: 'ثبت‌نام با موفقیت',
+            description: 'حساب کاربری شما با موفقیت ایجاد شد.',
+            variant: 'success',
+          })
+          resetForm()
         }
 
-        setSubmitting(false);
+        setSubmitting(false)
       }}
     >
       {({ dirty, isValid, isSubmitting }) => (
@@ -87,18 +87,8 @@ export default function RegisterForm() {
               ثبت نام
             </Button>
           </div>
-
-          <div className='mt-3'>
-            {alert && (
-              <Alert
-                message={alert.message}
-                type={alert.type}
-                onClose={() => setAlert(null)}
-              />
-            )}
-          </div>
         </Form>
       )}
     </Formik>
-  );
+  )
 }

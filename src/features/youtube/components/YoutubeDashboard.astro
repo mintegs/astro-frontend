@@ -1,0 +1,50 @@
+---
+import type { YoutubeVideo } from '../types'
+
+import FeaturedVideo from './FeaturedVideo.astro'
+import VideoGrid from './VideoGrid.astro'
+
+interface Props {
+  videos: YoutubeVideo[]
+  featuredVideo: YoutubeVideo
+}
+
+const { videos, featuredVideo } = Astro.props
+const remainingVideos = videos.slice(1)
+---
+
+<section class='youtube-dashboard' aria-label='YouTube Dashboard'>
+  <h2 class='dashboard-title'>YouTube</h2>
+
+  <FeaturedVideo video={featuredVideo} />
+
+  {remainingVideos.length > 0 && (
+    <div class='youtube-videos-section'>
+      <h3 class='section-title'>ویدیوهای اخیر</h3>
+      <VideoGrid videos={remainingVideos} />
+    </div>
+  )}
+</section>
+
+<style>
+  .youtube-dashboard {
+    margin-top: 24px;
+  }
+
+  .dashboard-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gh-fg);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gh-border-muted);
+  }
+
+  .section-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gh-fg);
+    margin-bottom: 12px;
+    margin-top: 24px;
+  }
+</style>

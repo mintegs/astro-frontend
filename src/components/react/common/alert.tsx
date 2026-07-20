@@ -1,6 +1,6 @@
 /** @jsxImportSource react */
-import type { AlertProps } from '../../../types';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
+import type { AlertProps } from '../../../types'
 
 export default function Alert({
   message,
@@ -8,15 +8,25 @@ export default function Alert({
   duration = 3000,
   onClose,
 }: AlertProps) {
-  const onCloseRef = useRef(onClose);
-  useEffect(() => { onCloseRef.current = onClose; });
+  const onCloseRef = useRef(onClose)
+  useEffect(() => {
+    onCloseRef.current = onClose
+  })
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (onCloseRef.current) onCloseRef.current();
-    }, duration);
-    return () => clearTimeout(timer);
-  }, [duration]);
+      if (onCloseRef.current) onCloseRef.current()
+    }, duration)
+    return () => clearTimeout(timer)
+  }, [duration])
+
+  const typeMap: Record<string, string> = {
+    danger: 'خطا',
+    error: 'خطا',
+    success: 'موفقیت',
+    warning: 'هشدار',
+    info: 'اطلاع',
+  };
 
   return (
     <div className={`alert ${type}`}>
@@ -29,11 +39,14 @@ export default function Alert({
       >
         <path d='M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z' />
       </svg>
-      <span className='sr-only'>{type}</span>
+      <span className='sr-only'>{typeMap[type || 'info']}</span>
       <div className='ms-3 text-sm font-medium'>{message}</div>
       {onClose && (
-        <button type='button' onClick={onClose}>
-          <span className='sr-only'>Close</span>
+        <button
+          type='button'
+          onClick={onClose}
+        >
+          <span className='sr-only'>بستن</span>
           <svg
             className='w-3 h-3'
             aria-hidden='true'
@@ -52,5 +65,5 @@ export default function Alert({
         </button>
       )}
     </div>
-  );
+  )
 }

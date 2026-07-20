@@ -1,0 +1,110 @@
+---
+import type { ActivityEvent } from '../types'
+
+interface Props {
+  events: ActivityEvent[]
+}
+
+const { events } = Astro.props
+
+const typeIcons: Record<string, string> = {
+  push: '⬆️',
+  pull_request: '🔀',
+  issue: '❗',
+  release: '🏷️',
+  commit: '💻',
+  star: '⭐',
+  fork: '🔱',
+}
+
+const typeLabels: Record<string, string> = {
+  push: 'ارسال کد',
+  pull_request: 'درخواست ادغام',
+  issue: 'مسئله',
+  release: 'انتشار',
+  commit: 'کامیت',
+  star: 'ستاره',
+  fork: 'فورک',
+}
+---
+
+<div class='activity-feed'>
+  {events.map((event) => (
+    <div class='activity-item'>
+      <div class='activity-icon'>{typeIcons[event.type] || '📌'}</div>
+      <div class='activity-content'>
+        <div class='activity-message'>{event.message}</div>
+        <div class='activity-meta'>
+          <span class='activity-type'>{typeLabels[event.type] || event.type}</span>
+          <span class='activity-dot'>·</span>
+          <span class='activity-time'>{event.timestamp}</span>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .activity-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .activity-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    transition: background-color 0.12s ease;
+  }
+
+  .activity-item:hover {
+    background-color: var(--gh-bg-subtle);
+  }
+
+  .activity-icon {
+    font-size: 0.875rem;
+    line-height: 1;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .activity-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .activity-message {
+    font-size: 0.8125rem;
+    color: var(--gh-fg);
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .activity-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 2px;
+  }
+
+  .activity-type {
+    font-size: 0.6875rem;
+    color: var(--gh-accent);
+    font-weight: 500;
+  }
+
+  .activity-dot {
+    font-size: 0.625rem;
+    color: var(--gh-fg-muted);
+  }
+
+  .activity-time {
+    font-size: 0.6875rem;
+    color: var(--gh-fg-muted);
+  }
+</style>

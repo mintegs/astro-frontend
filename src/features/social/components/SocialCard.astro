@@ -1,0 +1,16 @@
+---
+const { social } = Astro.props
+---
+<article class='card social-card flex items-center gap-3' tabindex='0' aria-label={social.name}>
+  <div class='icon w-12 h-12 rounded-md flex items-center justify-center text-xl'>{social.icon}</div>
+  <div class='flex-1'>
+    <div class='flex items-center justify-between'>
+      <div>
+        <h4 class='font-medium'>{social.name}</h4>
+        <div class='text-sm text-fg-muted'>{social.handle}</div>
+      </div>
+      <a class='text-sm btn-secondary' href={social.url} target='_blank' rel='noopener noreferrer'>مشاهده</a>
+    </div>
+    <p class='mt-2 text-sm text-fg-secondary'>{social.description}</p>
+  </div>
+</article>

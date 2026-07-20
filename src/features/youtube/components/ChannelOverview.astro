@@ -1,0 +1,70 @@
+---
+import type { YoutubeChannel } from '../types'
+import { formatViewCount } from '../adapters/youtube'
+
+interface Props {
+  channel: YoutubeChannel
+}
+
+const { channel } = Astro.props
+
+const createdDate = new Date(channel.createdAt)
+const joinMonth = createdDate.toLocaleDateString('fa-IR', { month: 'long', year: 'numeric' })
+
+const stats = [
+  { label: 'مشترکین', value: formatViewCount(channel.subscribers) },
+  { label: 'ویدیوها', value: channel.totalVideos.toLocaleString() },
+  { label: 'بازدید کل', value: formatViewCount(channel.totalViews) },
+  { label: 'عضویت', value: joinMonth },
+]
+---
+
+<div class='channel-overview-stats'>
+  {stats.map((stat) => (
+    <div class='channel-stat-item'>
+      <div class='channel-stat-value'>{stat.value}</div>
+      <div class='channel-stat-label'>{stat.label}</div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .channel-overview-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .channel-stat-item {
+    padding: 14px 12px;
+    border-radius: 6px;
+    background-color: var(--gh-bg-subtle);
+    border: 1px solid var(--gh-border-muted);
+    text-align: center;
+    transition: border-color 0.15s ease;
+  }
+
+  .channel-stat-item:hover {
+    border-color: var(--gh-border);
+  }
+
+  .channel-stat-value {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--gh-fg);
+    line-height: 1.2;
+  }
+
+  .channel-stat-label {
+    font-size: 0.75rem;
+    color: var(--gh-fg-muted);
+    margin-top: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .channel-overview-stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

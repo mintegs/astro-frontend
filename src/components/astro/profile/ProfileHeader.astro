@@ -1,0 +1,345 @@
+---
+interface ProfileStats {
+  repositories: number
+  followers: number
+  following: number
+  joinDate: string
+  yearsActive: number
+}
+
+interface YoutubeStats {
+  totalVideos: number
+  totalViews: number
+  subscribers: number
+}
+
+interface Props {
+  profile: {
+    name: string
+    username: string
+    avatar: string
+    bio: string
+    location: string
+    role: string
+    status: string
+    links: Array<{ label: string; url: string; icon: string }>
+  }
+  github: ProfileStats
+  youtube: YoutubeStats
+}
+
+const { profile, github, youtube } = Astro.props
+
+function fmt(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`
+  return String(n)
+}
+
+const joined = new Date(github.joinDate).toLocaleDateString('fa-IR', { month: 'short', year: 'numeric' })
+
+const kpis = [
+  { value: github.repositories.toLocaleString(), label: 'مخازن', accent: false },
+  { value: youtube.totalVideos.toLocaleString(), label: 'ویدیو', accent: false },
+  { value: fmt(youtube.totalViews), label: 'بازدید', accent: false },
+  { value: fmt(github.followers), label: 'دنبال‌کننده', accent: false },
+  { value: joined, label: 'عضویت', accent: true },
+  { value: `${github.yearsActive}`, label: 'سال فعالیت', accent: true },
+]
+---
+
+<article class='id-card' aria-labelledby='id-name'>
+
+  <div class='id-top'>
+    <img
+      class='id-avatar'
+      src={profile.avatar}
+      alt=''
+      width='80'
+      height='80'
+      loading='eager'
+    />
+    <div class='id-head'>
+      <h1 class='id-name' id='id-name'>{profile.name}</h1>
+      <span class='id-handle'>@{profile.username}</span>
+    </div>
+    <span class='id-badge'>
+      <span class='id-badge-dot'></span>
+      {profile.status}
+    </span>
+  </div>
+
+  <div class='id-middle'>
+    <div class='id-bio-col'>
+      <p class='id-role'>{profile.role}</p>
+      <p class='id-desc'>{profile.bio}</p>
+    </div>
+    <div class='id-link-row'>
+      {profile.links.map((l) => (
+        <a class='id-chip' href={l.url} target='_blank' rel='noopener noreferrer' aria-label={l.label}>
+          <span>{l.icon}</span>
+          <span class='id-chip-label'>{l.label}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class='id-sep' role='separator'></div>
+
+  <div class='id-kpis'>
+    {kpis.map((k) => (
+      <div class='id-kpi'>
+        <span class='id-kpi-val'>{k.value}</span>
+        <span class='id-kpi-lbl'>{k.label}</span>
+      </div>
+    ))}
+  </div>
+
+</article>
+
+<style>
+  /* ── Card Shell ── */
+
+  .id-card {
+    --pad: 2rem;
+    padding: var(--pad);
+    border-radius: 12px;
+    background: var(--gh-surface);
+    border: 1px solid var(--gh-border);
+    box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.025);
+  }
+
+  /* ── Top Row: Avatar · Name · Badge ── */
+
+  .id-top {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .id-avatar {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px var(--gh-bg), 0 0 0 5px var(--gh-border-muted);
+  }
+
+  .id-head {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .id-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gh-fg);
+    line-height: 1.2;
+    letter-spacing: -.015em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .id-handle {
+    font-size: .8125rem;
+    color: var(--gh-fg-muted);
+    font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  }
+
+  .id-badge {
+    margin-inline-start: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .3rem .75rem .3rem .6rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 500;
+    color: var(--gh-success);
+    background: var(--gh-success-subtle);
+    border: 1px solid var(--gh-success-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .id-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  /* ── Middle: Bio + Links ── */
+
+  .id-middle {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  .id-bio-col {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+  }
+
+  .id-role {
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--gh-fg);
+    letter-spacing: .01em;
+  }
+
+  .id-desc {
+    font-size: .8125rem;
+    color: var(--gh-fg-secondary);
+    line-height: 1.65;
+    max-width: 50ch;
+  }
+
+  .id-link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .id-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .3rem .7rem;
+    border-radius: 8px;
+    font-size: .75rem;
+    font-weight: 500;
+    color: var(--gh-fg-secondary);
+    background: var(--gh-bg-subtle);
+    border: 1px solid var(--gh-border-muted);
+    text-decoration: none;
+    transition: background .12s, border-color .12s, color .12s;
+  }
+
+  .id-chip:hover {
+    background: var(--gh-accent-subtle);
+    border-color: var(--gh-accent-muted);
+    color: var(--gh-accent);
+  }
+
+  .id-chip-label {
+    display: none;
+  }
+
+  /* ── Separator ── */
+
+  .id-sep {
+    height: 1px;
+    margin: 1.25rem 0;
+    background: var(--gh-border-muted);
+  }
+
+  /* ── KPI Strip ── */
+
+  .id-kpis {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2px;
+    background: var(--gh-border-muted);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .id-kpi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: .875rem .5rem;
+    background: var(--gh-bg-subtle);
+    transition: background .12s;
+  }
+
+  .id-kpi:hover {
+    background: var(--gh-bg-muted);
+  }
+
+  .id-kpi:first-child { border-radius: 10px 0 0 10px; }
+  .id-kpi:last-child  { border-radius: 0 10px 10px 0; }
+
+  .id-kpi-val {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--gh-fg);
+    line-height: 1.2;
+  }
+
+  .id-kpi-lbl {
+    font-size: .625rem;
+    font-weight: 500;
+    color: var(--gh-fg-muted);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    line-height: 1;
+  }
+
+  /* ── Responsive: Tablet ── */
+
+  @media (max-width: 860px) {
+    .id-top {
+      flex-wrap: wrap;
+    }
+
+    .id-badge {
+      margin-inline-start: 0;
+      margin-top: .25rem;
+    }
+
+    .id-kpis {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .id-kpi:first-child { border-radius: 10px 0 0 0; }
+    .id-kpi:nth-child(3) { border-radius: 0 10px 0 0; }
+    .id-kpi:nth-child(4) { border-radius: 0 0 0 10px; }
+    .id-kpi:last-child  { border-radius: 0 0 10px 0; }
+  }
+
+  /* ── Responsive: Mobile ── */
+
+  @media (max-width: 520px) {
+    .id-card {
+      --pad: 1.25rem;
+    }
+
+    .id-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .75rem;
+    }
+
+    .id-avatar {
+      width: 4rem;
+      height: 4rem;
+    }
+
+    .id-name {
+      font-size: 1.25rem;
+    }
+
+    .id-kpis {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .id-kpi:first-child { border-radius: 10px 0 0 0; }
+    .id-kpi:nth-child(2) { border-radius: 0 10px 0 0; }
+    .id-kpi:nth-last-child(2) { border-radius: 0 0 0 10px; }
+    .id-kpi:last-child  { border-radius: 0 0 10px 0; }
+
+    .id-chip-label {
+      display: inline;
+    }
+  }
+</style>

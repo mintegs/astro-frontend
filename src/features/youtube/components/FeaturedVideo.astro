@@ -1,0 +1,144 @@
+---
+import type { YoutubeVideo } from '../types'
+import { formatRelativeDate, formatViewCount } from '../adapters/youtube'
+
+interface Props {
+  video: YoutubeVideo
+}
+
+const { video } = Astro.props
+const relativeDate = formatRelativeDate(video.publishedAt)
+---
+
+<article class='card featured-video-card'>
+  <div class='featured-video-thumbnail'>
+    <img src={video.thumbnail} alt={video.title} loading='lazy' />
+    <span class='featured-video-duration'>{video.duration}</span>
+  </div>
+
+  <div class='featured-video-content'>
+    <div class='featured-video-meta'>
+      <span class='featured-video-date'>{relativeDate}</span>
+      <span class='featured-video-dot'>·</span>
+      <span class='featured-video-views'>{formatViewCount(video.views)} بازدید</span>
+      {video.likes !== undefined && (
+        <>
+          <span class='featured-video-dot'>·</span>
+          <span class='featured-video-likes'>{formatViewCount(video.likes)} پسند</span>
+        </>
+      )}
+    </div>
+
+    <h3 class='featured-video-title'>{video.title}</h3>
+    <p class='featured-video-desc'>{video.description}</p>
+
+    <div class='featured-video-actions'>
+      <a href={video.url} target='_blank' rel='noopener noreferrer' class='btn-primary featured-video-btn'>
+        تماشا
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .featured-video-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: border-color 0.15s ease;
+  }
+
+  .featured-video-card:hover {
+    border-color: var(--gh-accent-muted);
+  }
+
+  .featured-video-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 16px;
+  }
+
+  .featured-video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .featured-video-card:hover .featured-video-thumbnail img {
+    transform: scale(1.03);
+  }
+
+  .featured-video-duration {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    padding: 2px 6px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+
+  .featured-video-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .featured-video-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .featured-video-date,
+  .featured-video-views,
+  .featured-video-likes {
+    font-size: 0.75rem;
+    color: var(--gh-fg-muted);
+  }
+
+  .featured-video-dot {
+    font-size: 0.625rem;
+    color: var(--gh-fg-muted);
+  }
+
+  .featured-video-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--gh-fg);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .featured-video-desc {
+    font-size: 0.8125rem;
+    color: var(--gh-fg-secondary);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .featured-video-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .featured-video-btn {
+    padding: 8px 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+</style>

@@ -9,7 +9,10 @@
       "@layouts/*": ["src/layouts/*"],
       "@utils/*": ["src/utils/*"],
       "@types/*": ["src/types/*"],
-      "@styles/*": ["src/styles/*"]
+      "@styles/*": ["src/styles/*"],
+      "@features/github/*": ["src/features/github/*"],
+      "@features/youtube/*": ["src/features/youtube/*"],
+      "@features/social/*": ["src/features/social/*"]
     }
   }
 }

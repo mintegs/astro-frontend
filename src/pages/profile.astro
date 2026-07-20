@@ -1,0 +1,110 @@
+---
+import RootLayout from '../layouts/rootLayout.astro'
+import ProfileHeader from '../components/astro/profile/ProfileHeader.astro'
+import GithubDashboard from '../features/github/components/GithubDashboard.astro'
+import YoutubeDashboard from '../features/youtube/components/YoutubeDashboard.astro'
+import SocialSection from '../features/social/components/SocialSection.astro'
+
+import profile from '../data/profile'
+import { getContributionData } from '../features/github/services/contributions'
+import {
+  getGithubProfile,
+  getRecentActivity,
+  getLanguages,
+  getFrameworks,
+  getOrganizations,
+  getAchievements,
+  getFeaturedRepositories,
+} from '../features/github/services/profile'
+import { getChannelOverview } from '../features/youtube/services/channel'
+import { getLatestVideos, getFeaturedVideo } from '../features/youtube/services/videos'
+
+const [
+  contributionData,
+  githubProfile,
+  activity,
+  languages,
+  frameworks,
+  organizations,
+  achievements,
+  repositories,
+  channel,
+  videos,
+  featuredVideo,
+] = await Promise.all([
+  getContributionData(new Date().getFullYear()),
+  getGithubProfile(),
+  getRecentActivity(),
+  getLanguages(),
+  getFrameworks(),
+  getOrganizations(),
+  getAchievements(),
+  getFeaturedRepositories(),
+  getChannelOverview(),
+  getLatestVideos(),
+  getFeaturedVideo(),
+])
+const yearsActive = new Date().getFullYear() - new Date(githubProfile.createdAt).getFullYear()
+---
+
+<RootLayout title={`${profile.name} — پروفایل`} description={profile.bio}>
+  <div class='mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0'>
+    <ProfileHeader
+      profile={profile}
+      github={{
+        repositories: githubProfile.repositories,
+        followers: githubProfile.followers,
+        following: githubProfile.following,
+        joinDate: githubProfile.createdAt,
+        yearsActive,
+      }}
+      youtube={{
+        totalVideos: channel.totalVideos,
+        totalViews: channel.totalViews,
+        subscribers: channel.subscribers,
+      }}
+    />
+
+    <div class='dashboard-grid'>
+      <div class='dashboard-column'>
+        <GithubDashboard
+          contributionData={contributionData}
+          activity={activity}
+          languages={languages}
+          frameworks={frameworks}
+          organizations={organizations}
+          achievements={achievements}
+          repositories={repositories}
+        />
+      </div>
+
+      <div class='dashboard-column'>
+        <YoutubeDashboard
+          videos={videos}
+          featuredVideo={featuredVideo}
+        />
+      </div>
+    </div>
+
+    <SocialSection />
+  </div>
+</RootLayout>
+
+<style>
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  @media (min-width: 1024px) {
+    .dashboard-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .dashboard-column {
+    min-width: 0;
+  }
+</style>

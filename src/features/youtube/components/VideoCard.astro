@@ -1,0 +1,146 @@
+---
+import type { YoutubeVideo } from '../types'
+import { formatRelativeDate, formatViewCount } from '../adapters/youtube'
+
+interface Props {
+  video: YoutubeVideo
+}
+
+const { video } = Astro.props
+const relativeDate = formatRelativeDate(video.publishedAt)
+---
+
+<article class='card video-card'>
+  <div class='video-card-thumbnail'>
+    <img src={video.thumbnail} alt={video.title} loading='lazy' />
+    <span class='video-card-duration'>{video.duration}</span>
+  </div>
+
+  <div class='video-card-content'>
+    <h4 class='video-card-title'>{video.title}</h4>
+
+    <div class='video-card-stats'>
+      <span class='video-card-views'>{formatViewCount(video.views)} بازدید</span>
+      <span class='video-card-dot'>·</span>
+      <span class='video-card-date'>{relativeDate}</span>
+    </div>
+
+    {video.likes !== undefined && (
+      <div class='video-card-extras'>
+        <span class='video-card-likes'>👍 {formatViewCount(video.likes)}</span>
+        {video.comments !== undefined && (
+          <span class='video-card-comments'>💬 {video.comments}</span>
+        )}
+      </div>
+    )}
+  </div>
+
+  <a href={video.url} target='_blank' rel='noopener noreferrer' class='video-card-link' aria-label={video.title}>
+    <span class='sr-only'>تماشا</span>
+  </a>
+</article>
+
+<style>
+  .video-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: border-color 0.15s ease, transform 0.12s ease;
+    cursor: pointer;
+  }
+
+  .video-card:hover {
+    border-color: var(--gh-accent-muted);
+    transform: translateY(-2px);
+  }
+
+  .video-card-thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .video-card-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .video-card:hover .video-card-thumbnail img {
+    transform: scale(1.05);
+  }
+
+  .video-card-duration {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    padding: 2px 6px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+
+  .video-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+  }
+
+  .video-card-title {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--gh-fg);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .video-card-stats {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.6875rem;
+    color: var(--gh-fg-muted);
+  }
+
+  .video-card-dot {
+    font-size: 0.5rem;
+  }
+
+  .video-card-extras {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.6875rem;
+    color: var(--gh-fg-muted);
+    margin-top: 2px;
+  }
+
+  .video-card-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>

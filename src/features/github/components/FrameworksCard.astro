@@ -1,0 +1,69 @@
+---
+import type { Framework } from '../types'
+
+interface Props {
+  frameworks: Framework[]
+}
+
+const { frameworks } = Astro.props
+---
+
+<div class='frameworks-grid'>
+  {frameworks.map((fw) => (
+    <div class='framework-item'>
+      <span class='framework-icon'>{fw.icon}</span>
+      <div class='framework-info'>
+        <span class='framework-name'>{fw.name}</span>
+        <span class='framework-count'>{fw.repoCount} مخزن</span>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .frameworks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .framework-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    background-color: var(--gh-bg-subtle);
+    border: 1px solid var(--gh-border-muted);
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .framework-item:hover {
+    border-color: var(--gh-border);
+    background-color: var(--gh-bg-muted);
+  }
+
+  .framework-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .framework-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .framework-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--gh-fg);
+    line-height: 1.2;
+  }
+
+  .framework-count {
+    font-size: 0.6875rem;
+    color: var(--gh-fg-muted);
+  }
+</style>

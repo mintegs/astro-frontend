@@ -1,0 +1,114 @@
+---
+import type {
+  ContributionData,
+  ActivityEvent,
+  Language,
+  Framework,
+  Organization,
+  Achievement,
+  Repository,
+} from '../types'
+
+import BentoCard from '../../../components/astro/profile/BentoCard.astro'
+import ContributionGraph from './ContributionGraph.astro'
+import ActivityFeed from './ActivityFeed.astro'
+import LanguagesCard from './LanguagesCard.astro'
+import FrameworksCard from './FrameworksCard.astro'
+import RepositoryCard from './RepositoryCard.astro'
+import AchievementsCard from './AchievementsCard.astro'
+import OrganizationsCard from './OrganizationsCard.astro'
+
+interface Props {
+  contributionData: ContributionData
+  activity: ActivityEvent[]
+  languages: Language[]
+  frameworks: Framework[]
+  organizations: Organization[]
+  achievements: Achievement[]
+  repositories: Repository[]
+}
+
+const {
+  contributionData,
+  activity,
+  languages,
+  frameworks,
+  organizations,
+  achievements,
+  repositories,
+} = Astro.props
+---
+
+<section class='github-dashboard' aria-label='GitHub Dashboard'>
+  <h2 class='dashboard-title'>GitHub</h2>
+
+  <div class='bento-grid'>
+    <BentoCard layout='large'>
+      <ContributionGraph data={contributionData} />
+    </BentoCard>
+
+    <BentoCard layout='medium'>
+      <h3 class='section-title'>فعالیت اخیر</h3>
+      <ActivityFeed events={activity} />
+    </BentoCard>
+
+    <BentoCard layout='medium'>
+      <h3 class='section-title'>زبان‌ها</h3>
+      <LanguagesCard languages={languages} />
+    </BentoCard>
+
+    <BentoCard layout='medium'>
+      <h3 class='section-title'>فریمورک‌ها و ابزارها</h3>
+      <FrameworksCard frameworks={frameworks} />
+    </BentoCard>
+
+    <BentoCard layout='large'>
+      <h3 class='section-title'>مخازن منتخب</h3>
+      <div class='repos-list'>
+        {repositories.filter(r => r.isPinned).slice(0, 4).map((repo) => (
+          <RepositoryCard repo={repo} />
+        ))}
+      </div>
+    </BentoCard>
+
+    <BentoCard layout='medium'>
+      <h3 class='section-title'>دستاوردها</h3>
+      <AchievementsCard achievements={achievements} />
+    </BentoCard>
+
+    <BentoCard layout='half'>
+      <h3 class='section-title'>سازمان‌ها</h3>
+      <OrganizationsCard organizations={organizations} />
+    </BentoCard>
+  </div>
+</section>
+
+<style>
+  .github-dashboard {
+    margin-top: 24px;
+  }
+
+  .dashboard-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gh-fg);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--gh-border-muted);
+  }
+
+  .section-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gh-fg);
+    margin-bottom: 12px;
+  }
+
+  .repos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    overflow-y: auto;
+  }
+</style>

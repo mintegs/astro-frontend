@@ -1,5 +1,5 @@
 /** @jsxImportSource react */
-import type { ButtonProps } from '../../../types';
+import type { ButtonProps } from '../../../types'
 
 export default function Button({
   children,
@@ -8,12 +8,14 @@ export default function Button({
   disabled = false,
   block = true,
   loading = false,
+  ...rest
 }: ButtonProps) {
   return (
     <button
       className={`${block ? 'w-full' : ''} ${color} text-center py-1.5 px-4 text-sm font-medium rounded-md`}
       type={type}
       disabled={disabled || loading}
+      {...rest}
     >
       <div className='inline-flex items-center'>
         {loading && (
@@ -41,5 +43,5 @@ export default function Button({
         {children}
       </div>
     </button>
-  );
+  )
 }
