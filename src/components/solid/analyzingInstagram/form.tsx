@@ -1,94 +1,32 @@
-import JSZip from 'jszip'
 import { createEffect, createSignal } from 'solid-js'
 import Alert from '../common/alert'
 import InformationAnalyzingInstagramCard from './informationCard'
 import AnalyzingInstagramTabs from './tabs'
+import { parseInstagramZip, type InstagramData } from '../../../utils/instagram'
 
 export default function AnalyzingInstagramFollowersForm() {
   let fileInputRef: HTMLInputElement | undefined
 
-  const [followersData, setFollowersData] = createSignal<string[]>([])
-  const [followingData, setFollowingData] = createSignal<string[]>([])
-  const [noFollowData, setNoFollowData] = createSignal<string[]>([])
-  const [hideStoryData, setHideStoryData] = createSignal<string[]>([])
-  const [pendingRequestsData, setPendingRequestsData] = createSignal<string[]>(
-    []
-  )
-  const [blockData, setBlockData] = createSignal<string[]>([])
+  const [data, setData] = createSignal<InstagramData>({
+    followers: [],
+    following: [],
+    noFollowBack: [],
+    hideStory: [],
+    pendingRequests: [],
+    blocked: [],
+  })
   const [errorMessage, setErrorMessage] = createSignal<string | null>(null)
   const [hasData, setHasData] = createSignal(false)
 
-  const parseJsonFile = async (
-    file: JSZip.JSZipObject | null,
-    property?: string,
-    fixUrl?: boolean
-  ) => {
-    if (!file) return []
-    const content = await file.async('string')
-    const json = JSON.parse(content)
-    
-    const dataArray =
-      property && Array.isArray(json[property]) ? json[property] : json
-    return Array.isArray(dataArray)
-      ? dataArray.map((item: any) =>
-          fixUrl
-            ? item['string_list_data'][0].href.replace('_u/', '')
-            : item['string_list_data'][0].href
-        )
-      : []
-  }
-
-  const parseJsonFileForHideStory = async (
-    file: JSZip.JSZipObject | null,
-    property?: string
-  ) => {
-    if (!file) return []
-    const content = await file.async('string')
-    const json = JSON.parse(content)
-    
-    const dataArray =
-      property && Array.isArray(json[property]) ? json[property] : json
-    
-
-    return dataArray.map((item:any) => item.label_values[2].value)
-  }
-
-  const parseJsonFileForPendingRequest = async (
-    file: JSZip.JSZipObject | null,
-    property?: string
-  ) => {
-    if (!file) return []
-    const content = await file.async('string')
-    const json = JSON.parse(content)
-    
-    const dataArray =
-      property && Array.isArray(json[property]) ? json[property] : json
-
-    return dataArray.map((item:any) => item.label_values[2].value)
-  }
-
-  const parseJsonFileBlock = async (
-    file: JSZip.JSZipObject | null,
-    property?: string
-  ) => {
-    if (!file) return []
-    const content = await file.async('string')
-    const json = JSON.parse(content)
-    
-    const dataArray =
-      property && Array.isArray(json[property]) ? json[property] : json
-    
-
-    return dataArray.map((item:any) => item.label_values[2].value)
-  }
-
   const resetData = () => {
-    setFollowersData([])
-    setFollowingData([])
-    setNoFollowData([])
-    setHideStoryData([])
-    setPendingRequestsData([])
-    setBlockData([])
+    setData({
+      followers: [],
+      following: [],
+      noFollowBack: [],
+      hideStory: [],
+      pendingRequests: [],
+      blocked: [],
+    })
   }
 
   const focusInput = () => fileInputRef?.click()
@@ -104,73 +42,25 @@ export default function AnalyzingInstagramFollowersForm() {
       return
     }
 
-    const zip = new JSZip()
-
     try {
-      const loadedZip = await zip.loadAsync(file)
-
-      const followers = await parseJsonFile(
-        loadedZip.file('connections/followers_and_following/followers_1.json')
-      )
-
-      const following = await parseJsonFile(
-        loadedZip.file('connections/followers_and_following/following.json'),
-        'relationships_following',
-        true
-      )
-
-      console.log("followers", followers)
-      console.log("following", following)
-
-
-      const hideStory = await parseJsonFileForHideStory(
-        loadedZip.file(
-          'connections/followers_and_following/hide_story_from.json'
-        ),
-        'relationships_hide_stories_from'
-      )
-      
-      const pendingRequests = await parseJsonFileForPendingRequest(
-        loadedZip.file(
-          'connections/followers_and_following/pending_follow_requests.json'
-        ),
-        'relationships_follow_requests_sent'
-      )
-
-      const block = await parseJsonFileBlock(
-        loadedZip.file(
-          'connections/followers_and_following/blocked_profiles.json'
-        ),
-        'relationships_blocked_users'
-      )
-
-      setFollowersData(followers)
-      setFollowingData(following)
-      setHideStoryData(hideStory)
-      setPendingRequestsData(pendingRequests)
-      setBlockData(block)
-
-
-      const unFollowed = following.filter(
-        (followingItem) => !followers.includes(followingItem)
-      )
-
-      setNoFollowData(unFollowed)
+      const parsedData = await parseInstagramZip(file)
+      setData(parsedData)
     } catch (error) {
-      console.log("error",error)
+      console.error('Error extracting ZIP file:', error)
       setErrorMessage('Error extracting ZIP file.')
       resetData()
     }
   }
 
   createEffect(() => {
+    const d = data()
     setHasData(
-      followersData().length > 0 ||
-        followingData().length > 0 ||
-        noFollowData().length > 0 ||
-        hideStoryData().length > 0 ||
-        pendingRequestsData().length > 0 ||
-        blockData().length > 0
+      d.followers.length > 0 ||
+        d.following.length > 0 ||
+        d.noFollowBack.length > 0 ||
+        d.hideStory.length > 0 ||
+        d.pendingRequests.length > 0 ||
+        d.blocked.length > 0
     )
   })
 
@@ -223,7 +113,6 @@ export default function AnalyzingInstagramFollowersForm() {
         </div>
       )}
 
-      {/* Display error message */}
       {errorMessage() && (
         <Alert
           message={errorMessage() as string}
@@ -236,20 +125,20 @@ export default function AnalyzingInstagramFollowersForm() {
         <div class='grid grid-cols-1 md:grid-cols-2 gap-4'>
           <div>
             <InformationAnalyzingInstagramCard
-              followersCount={followersData}
-              followingCount={followingData}
-              noFollowCount={noFollowData}
-              hideStoryCount={hideStoryData}
-              pendingRequestsCount={pendingRequestsData}
-              blockCount={blockData}
+              followersCount={() => data().followers}
+              followingCount={() => data().following}
+              noFollowCount={() => data().noFollowBack}
+              hideStoryCount={() => data().hideStory}
+              pendingRequestsCount={() => data().pendingRequests}
+              blockCount={() => data().blocked}
             />
           </div>
           <div>
             <AnalyzingInstagramTabs
-              noFollow={noFollowData}
-              hideStory={hideStoryData}
-              pendingRequests={pendingRequestsData}
-              blockList={blockData}
+              noFollow={() => data().noFollowBack}
+              hideStory={() => data().hideStory}
+              pendingRequests={() => data().pendingRequests}
+              blockList={() => data().blocked}
             />
           </div>
         </div>

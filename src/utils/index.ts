@@ -1,0 +1,1 @@
+export { convertMessage } from './messages';

@@ -1,0 +1,38 @@
+---
+import '../styles/index.css'
+
+interface Props {
+  title: string;
+  description: string;
+  class?: string;
+  bodyClass?: string;
+}
+
+const { title, description, class: htmlClass, bodyClass } = Astro.props
+---
+
+<html
+  lang='fa'
+  dir='rtl'
+  class={htmlClass}
+>
+  <head>
+    <link
+      rel='stylesheet'
+      href='https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Vazirmatn:wght@100..900&display=swap'
+    />
+    <meta charset='utf-8' />
+    <meta
+      name='viewport'
+      content='width=device-width, initial-scale=1'
+    />
+    <meta
+      name='description'
+      content={description}
+    />
+    <title>مینتگز - {title}</title>
+  </head>
+  <body class={bodyClass}>
+    <slot />
+  </body>
+</html>

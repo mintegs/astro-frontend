@@ -1,48 +1,43 @@
 /** @jsxImportSource react */
-import { Form, Formik } from "formik";
-import { useState } from "react";
-import { registerSchema } from "../../../../utils/validation/schemas/authSchema";
-import { connectAPI } from "../../../../utils/api/connectApi";
-import { convertMessage } from "../../../../utils/messages";
-import type { Alert as AlertType } from "../../../../types";
-import Input from "../../common/input";
-import Button from "../../common/button";
-import Alert from "../../common/alert";
+import { Form, Formik } from 'formik';
+import { useState } from 'react';
+import { registerSchema } from '../../../../utils/validation/schemas/authSchema';
+import { connectAPI } from '../../../../utils/api/connectApi';
+import { convertMessage } from '../../../../utils/messages';
+import { API_ENDPOINTS } from '../../../../config';
+import type { AlertProps } from '../../../../types';
+import Input from '../../common/input';
+import Button from '../../common/button';
+import Alert from '../../common/alert';
 
 export default function RegisterForm() {
-  const [alert, setAlert] = useState<AlertType | null>(null);
+  const [alert, setAlert] = useState<AlertProps | null>(null);
 
   return (
     <Formik
       initialValues={{
-        email: "",
-        username: "",
-        password: "",
+        email: '',
+        username: '',
+        password: '',
       }}
       validationSchema={registerSchema}
       onSubmit={async (values, { setSubmitting, resetForm }) => {
         setSubmitting(true);
 
-        // Using connectAPI function
-        const [error] = await connectAPI(
-          "http://localhost:8080/v1/auth/register",
-          {
-            method: "POST",
-            body: { ...values },
-          }
-        );
+        const [error] = await connectAPI(API_ENDPOINTS.AUTH.REGISTER, {
+          method: 'POST',
+          body: { ...values },
+        });
 
         if (error) {
-          // Handle error message
           setAlert({
             message: convertMessage(error.message),
-            type: "danger",
+            type: 'danger',
           });
         } else {
-          // Handle success message and reset form
           setAlert({
-            message: "ثبت نام شما باموفقیت انجام شد",
-            type: "success",
+            message: 'ثبت نام شما باموفقیت انجام شد',
+            type: 'success',
           });
           resetForm();
         }
@@ -51,12 +46,12 @@ export default function RegisterForm() {
       }}
     >
       {({ dirty, isValid, isSubmitting }) => (
-        <Form className="space-y-4">
+        <Form className='space-y-4'>
           <div>
             <Input
-              classNames="form-input"
-              name="email"
-              label="ایمیل"
+              classNames='form-input'
+              name='email'
+              label='ایمیل'
               withLabel
               isLtr
             />
@@ -64,9 +59,9 @@ export default function RegisterForm() {
 
           <div>
             <Input
-              classNames="form-input"
-              name="username"
-              label="نام کاربری"
+              classNames='form-input'
+              name='username'
+              label='نام کاربری'
               withLabel
               isLtr
             />
@@ -74,18 +69,18 @@ export default function RegisterForm() {
 
           <div>
             <Input
-              classNames="form-input"
-              name="password"
-              type="password"
-              label="رمزعبور"
+              classNames='form-input'
+              name='password'
+              type='password'
+              label='رمزعبور'
               withLabel
               isLtr
             />
           </div>
 
-          <div className="mt-4">
+          <div className='mt-4'>
             <Button
-              type="submit"
+              type='submit'
               disabled={!(dirty && isValid)}
               loading={isSubmitting}
             >
@@ -93,7 +88,7 @@ export default function RegisterForm() {
             </Button>
           </div>
 
-          <div className="mt-3">
+          <div className='mt-3'>
             {alert && (
               <Alert
                 message={alert.message}
