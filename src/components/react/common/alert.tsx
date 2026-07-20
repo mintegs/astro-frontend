@@ -1,6 +1,6 @@
 /** @jsxImportSource react */
 import type { AlertProps } from '../../../types';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function Alert({
   message,
@@ -8,12 +8,15 @@ export default function Alert({
   duration = 3000,
   onClose,
 }: AlertProps) {
+  const onCloseRef = useRef(onClose);
+  useEffect(() => { onCloseRef.current = onClose; });
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (onClose) onClose();
+      if (onCloseRef.current) onCloseRef.current();
     }, duration);
     return () => clearTimeout(timer);
-  }, [onClose, duration]);
+  }, [duration]);
 
   return (
     <div className={`alert ${type}`}>

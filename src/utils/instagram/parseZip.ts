@@ -45,6 +45,27 @@ async function parseLabelValueFile(
   );
 }
 
+export function validateInstagramData(data: InstagramData | null | undefined): string | null {
+  if (!data || typeof data !== 'object') {
+    return 'No valid Instagram data was found.';
+  }
+
+  const keys: (keyof InstagramData)[] = [
+    'followers', 'following', 'noFollowBack',
+    'hideStory', 'pendingRequests', 'blocked',
+  ];
+
+  const hasAtLeastOneEntry = keys.some(
+    (key) => Array.isArray(data[key]) && data[key].length > 0,
+  );
+
+  if (!hasAtLeastOneEntry) {
+    return 'No valid Instagram data was found in the uploaded archive.';
+  }
+
+  return null;
+}
+
 export async function parseInstagramZip(file: File): Promise<InstagramData> {
   const zip = new JSZip();
   const loadedZip = await zip.loadAsync(file);

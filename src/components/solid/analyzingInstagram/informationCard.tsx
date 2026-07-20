@@ -36,7 +36,7 @@ export default function InformationAnalyzingInstagramCard({
   return (
     <div class='card'>
       <div
-        onclick={() => setIsOpen(!isOpen())}
+        onClick={() => setIsOpen(!isOpen())}
         class='w-full text-left text-lg font-semibold flex justify-between items-center cursor-pointer'
         style={{ color: 'var(--gh-fg)' }}
       >

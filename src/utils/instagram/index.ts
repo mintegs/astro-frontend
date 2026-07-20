@@ -1,2 +1,2 @@
-export { parseInstagramZip } from './parseZip';
+export { parseInstagramZip, validateInstagramData } from './parseZip';
 export type { InstagramData } from './parseZip';

@@ -13,7 +13,7 @@ export default function Button({
     <button
       className={`${block ? 'w-full' : ''} ${color} text-center py-1.5 px-4 text-sm font-medium rounded-md`}
       type={type}
-      disabled={disabled}
+      disabled={disabled || loading}
     >
       <div className='inline-flex items-center'>
         {loading && (

@@ -1,8 +1,8 @@
 import { createEffect, createSignal } from 'solid-js'
+import { parseInstagramZip, validateInstagramData, type InstagramData } from '../../../utils/instagram'
 import Alert from '../common/alert'
 import InformationAnalyzingInstagramCard from './informationCard'
 import AnalyzingInstagramTabs from './tabs'
-import { parseInstagramZip, type InstagramData } from '../../../utils/instagram'
 
 export default function AnalyzingInstagramFollowersForm() {
   let fileInputRef: HTMLInputElement | undefined
@@ -37,18 +37,29 @@ export default function AnalyzingInstagramFollowersForm() {
 
     if (!file) return
 
+    setErrorMessage(null)
+
     if (file.type !== 'application/zip') {
       setErrorMessage('Please upload a valid ZIP file.')
+      input.value = ''
       return
     }
 
     try {
       const parsedData = await parseInstagramZip(file)
-      setData(parsedData)
+      const error = validateInstagramData(parsedData)
+      if (error) {
+        setErrorMessage(error)
+        resetData()
+      } else {
+        setData(parsedData)
+      }
+      input.value = ''
     } catch (error) {
       console.error('Error extracting ZIP file:', error)
-      setErrorMessage('Error extracting ZIP file.')
+      setErrorMessage('The uploaded archive appears to be empty or unsupported.')
       resetData()
+      input.value = ''
     }
   }
 
@@ -60,7 +71,7 @@ export default function AnalyzingInstagramFollowersForm() {
         d.noFollowBack.length > 0 ||
         d.hideStory.length > 0 ||
         d.pendingRequests.length > 0 ||
-        d.blocked.length > 0
+        d.blocked.length > 0,
     )
   })
 
@@ -76,10 +87,12 @@ export default function AnalyzingInstagramFollowersForm() {
             color: 'var(--gh-fg-secondary)',
           }}
           onMouseEnter={(e) => {
-            (e.currentTarget as HTMLElement).style.borderColor = 'var(--gh-accent)'
+            ;(e.currentTarget as HTMLElement).style.borderColor =
+              'var(--gh-accent)'
           }}
           onMouseLeave={(e) => {
-            (e.currentTarget as HTMLElement).style.borderColor = 'var(--gh-border)'
+            ;(e.currentTarget as HTMLElement).style.borderColor =
+              'var(--gh-border)'
           }}
         >
           <div class='grid gap-1 justify-center'>

@@ -81,7 +81,7 @@ export default function RegisterForm() {
           <div className='mt-4'>
             <Button
               type='submit'
-              disabled={!(dirty && isValid)}
+              disabled={!(dirty && isValid) || isSubmitting}
               loading={isSubmitting}
             >
               ثبت نام
