@@ -627,12 +627,14 @@ input[type='file']:focus-visible,
 .bento-card[data-layout='medium'] { grid-column: span 4; }
 .bento-card[data-layout='small'] { grid-column: span 4; }
 .bento-card[data-layout='half'] { grid-column: span 6; }
+.bento-card[data-layout='full'] { grid-column: 1 / -1; }
 
 @media (max-width: 1024px) {
   .bento-card[data-layout='large'] { grid-column: span 8; }
   .bento-card[data-layout='medium'] { grid-column: span 6; }
   .bento-card[data-layout='small'] { grid-column: span 6; }
   .bento-card[data-layout='half'] { grid-column: span 6; }
+  .bento-card[data-layout='full'] { grid-column: 1 / -1; }
 }
 
 @media (max-width: 640px) {
@@ -643,18 +645,18 @@ input[type='file']:focus-visible,
 /* Contribution Grid Theme Colors */
 :root,
 [data-theme='light'] {
-  --contrib-0: #ebedf0;
-  --contrib-1: #9be9a8;
-  --contrib-2: #40c463;
-  --contrib-3: #30a14e;
-  --contrib-4: #216e39;
+  --contrib-0: #ebebeb;
+  --contrib-1: #c8e2f5;
+  --contrib-2: #7eb8e0;
+  --contrib-3: #3d8fd1;
+  --contrib-4: #0969da;
 }
 [data-theme='dark'] {
-  --contrib-0: #161b22;
-  --contrib-1: #0e4429;
-  --contrib-2: #006d32;
-  --contrib-3: #26a641;
-  --contrib-4: #39d353;
+  --contrib-0: #212121;
+  --contrib-1: #0c2d4a;
+  --contrib-2: #1a4a7a;
+  --contrib-3: #388bfd;
+  --contrib-4: #58a6ff;
 }
 
 /* ========================= */

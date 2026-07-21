@@ -8,24 +8,16 @@ interface Props {
 const { data } = Astro.props
 const { availableYears, selectedYear, years } = data
 
-const weekdayLabelsShort = ['', 'Mon', '', 'Wed', '', 'Fri', '']
-const monthNames = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-]
+function toPersianDigits(n: number): string {
+  return n.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])
+}
 
 interface GridWeek {
   days: (ContributionDay | null)[]
 }
 
-interface MonthPosition {
-  name: string
-  col: number
-}
-
 function buildYearGrid(yearData: ContributionData['years'][number]): {
   weeks: GridWeek[]
-  monthPositions: MonthPosition[]
   totalWeeks: number
 } {
   const dayMap = new Map(yearData.days.map((d) => [d.date, d]))
@@ -62,17 +54,7 @@ function buildYearGrid(yearData: ContributionData['years'][number]): {
     weeks.push({ days: currentWeek })
   }
 
-  const monthPositions: MonthPosition[] = []
-  for (let m = 0; m < 12; m++) {
-    const firstOfMonth = new Date(year, m, 1)
-    const daysDiff = Math.floor(
-      (firstOfMonth.getTime() - gridStart.getTime()) / 86400000,
-    )
-    const col = Math.floor(daysDiff / 7)
-    monthPositions.push({ name: monthNames[m], col })
-  }
-
-  return { weeks, monthPositions, totalWeeks: weeks.length }
+  return { weeks, totalWeeks: weeks.length }
 }
 
 const grids = availableYears.map((y) => ({
@@ -84,61 +66,66 @@ const grids = availableYears.map((y) => ({
 const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
 ---
 
-<div class='card contrib-graph' data-component='contribution-graph'>
+<div
+  class='contrib-graph'
+  data-component='contribution-graph'
+>
   <div class='contrib-header'>
-    <span class='contrib-total' id={`contrib-total-${defaultGrid.year}`}>
-      {defaultGrid.total.toLocaleString()} مشارکت در سال گذشته
-    </span>
+    <h3
+      class='contrib-title'
+      id='contrib-title'
+    >
+      مشارکت در سال {toPersianDigits(defaultGrid.year)}
+    </h3>
     <div class='contrib-year-selector'>
-      <label for='contrib-year-select' class='sr-only'>سال</label>
-      <select id='contrib-year-select' class='contrib-year-select'>
-        {[...availableYears].reverse().map((y) => (
-          <option value={y} selected={y === selectedYear}>{y}</option>
-        ))}
+      <label
+        for='contrib-year-select'
+        class='sr-only'
+        >سال</label
+      >
+      <select
+        id='contrib-year-select'
+        class='contrib-year-select'
+      >
+        {
+          [...availableYears].reverse().map((y) => (
+            <option
+              value={y}
+              selected={y === selectedYear}
+            >
+              {toPersianDigits(y)}
+            </option>
+          ))
+        }
       </select>
     </div>
   </div>
 
-  {grids.map(({ year, grid, total }) => (
-    <div
-      class='contrib-year-panel'
-      data-year={year}
-      data-total={total.toLocaleString()}
-      style={year !== selectedYear ? 'display:none' : undefined}
-    >
-      <div class='contrib-grid-scroll'>
-        <div class='contrib-grid-wrapper' dir='ltr'>
-          <div class='contrib-weekday-labels'>
-            {weekdayLabelsShort.map((label) => (
-              <span class='contrib-weekday-label'>{label}</span>
-            ))}
-          </div>
-
-          <div class='contrib-grid-area'>
-            <div class='contrib-months-row' style={`grid-template-columns: repeat(${grid.totalWeeks}, 1fr)`}>
-              {grid.monthPositions.map((m) => (
-                <span
-                  class='contrib-month-label'
-                  style={`grid-column: ${m.col + 1}`}
-                >
-                  {m.name}
-                </span>
-              ))}
-            </div>
-
-            <div class='contrib-grid' style={`grid-template-columns: repeat(${grid.totalWeeks}, 1fr)`}>
+  {
+    grids.map(({ year, grid, total }) => (
+      <div
+        class='contrib-year-panel'
+        data-year={year}
+        data-total={total.toLocaleString()}
+        style={year !== selectedYear ? 'display:none' : undefined}
+      >
+        <div class='contrib-grid-scroll'>
+          <div
+            class='contrib-grid-wrapper'
+            dir='ltr'
+          >
+            <div
+              class='contrib-grid'
+              style={`grid-template-columns: repeat(${grid.totalWeeks}, 1fr)`}
+            >
               {grid.weeks.map((week) =>
                 week.days.map((day) => {
                   if (day === null) {
                     return <div class='contrib-day contrib-day-empty' />
                   }
-                  const tip = day.count === 0
-                    ? `بدون مشارکت در ${day.date}`
-                    : `${day.count} مشارکت در ${day.date}`
                   return (
                     <div
                       class={`contrib-day contrib-day-filled contrib-level-${day.level}`}
-                      data-tip={tip}
                     />
                   )
                 }),
@@ -147,29 +134,44 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
           </div>
         </div>
       </div>
-    </div>
-  ))}
+    ))
+  }
 
-  <div class='contrib-legend'>
-    <span class='contrib-legend-label'>کمتر</span>
-    <div class='contrib-day contrib-level-0 contrib-legend-cell' />
-    <div class='contrib-day contrib-level-1 contrib-legend-cell' />
-    <div class='contrib-day contrib-level-2 contrib-legend-cell' />
-    <div class='contrib-day contrib-level-3 contrib-legend-cell' />
-    <div class='contrib-day contrib-level-4 contrib-legend-cell' />
-    <span class='contrib-legend-label'>بیشتر</span>
+  <div class='contrib-footer'>
+    <span
+      class='contrib-total'
+      id='contrib-total'
+    >
+      {defaultGrid.total.toLocaleString()} مشارکت
+    </span>
+    <div class='contrib-legend'>
+      <span class='contrib-legend-label'>کمتر</span>
+      <div class='contrib-day contrib-level-0 contrib-legend-cell'></div>
+      <div class='contrib-day contrib-level-1 contrib-legend-cell'></div>
+      <div class='contrib-day contrib-level-2 contrib-legend-cell'></div>
+      <div class='contrib-day contrib-level-3 contrib-legend-cell'></div>
+      <div class='contrib-day contrib-level-4 contrib-legend-cell'></div>
+      <span class='contrib-legend-label'>بیشتر</span>
+    </div>
   </div>
 </div>
 
 <script>
+  function toPersianDigits(n: number): string {
+    return n.toString().replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])
+  }
+
   function initContributionGraph() {
-    const select = document.getElementById('contrib-year-select') as HTMLSelectElement | null
+    const select = document.getElementById(
+      'contrib-year-select',
+    ) as HTMLSelectElement | null
     if (!select) return
 
     select.addEventListener('change', () => {
       const year = Number(select.value)
       const panels = document.querySelectorAll('.contrib-year-panel')
-      const totals = document.querySelectorAll('.contrib-total')
+      const title = document.getElementById('contrib-title')
+      const total = document.getElementById('contrib-total')
 
       panels.forEach((panel) => {
         const el = panel as HTMLElement
@@ -180,11 +182,17 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
         }
       })
 
-      const activePanel = document.querySelector(`.contrib-year-panel[data-year="${year}"]`)
-      totals.forEach((el) => {
-        const total = activePanel?.getAttribute('data-total') ?? '0'
-        el.textContent = `${total} مشارکت در سال گذشته`
-      })
+      if (title) {
+        title.textContent = `مشارکت در سال ${toPersianDigits(year)}`
+      }
+
+      const activePanel = document.querySelector(
+        `.contrib-year-panel[data-year="${year}"]`,
+      )
+      if (total) {
+        const count = activePanel?.getAttribute('data-total') ?? '0'
+        total.textContent = `${count} مشارکت`
+      }
     })
   }
 
@@ -192,6 +200,11 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
 </script>
 
 <style>
+  .contrib-graph {
+    display: flex;
+    flex-direction: column;
+  }
+
   .sr-only {
     position: absolute;
     width: 1px;
@@ -211,10 +224,11 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
     margin-bottom: 12px;
   }
 
-  .contrib-total {
+  .contrib-title {
     font-size: 0.875rem;
     font-weight: 600;
     color: var(--gh-fg);
+    margin: 0;
   }
 
   .contrib-year-select {
@@ -227,7 +241,9 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
     border-radius: 6px;
     cursor: pointer;
     outline: none;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
     appearance: auto;
   }
   .contrib-year-select:hover {
@@ -248,51 +264,18 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
 
   .contrib-grid-wrapper {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 8px;
-    min-width: fit-content;
-  }
-
-  .contrib-weekday-labels {
-    display: grid;
-    grid-template-rows: repeat(7, 11px);
-    gap: 3px;
-    padding-top: 22px;
-  }
-
-  .contrib-weekday-label {
-    font-size: 10px;
-    line-height: 11px;
-    color: var(--gh-fg-muted);
-    text-align: right;
-  }
-
-  .contrib-grid-area {
-    display: grid;
-    grid-template-rows: auto auto;
-    gap: 4px;
-  }
-
-  .contrib-months-row {
-    display: grid;
-    gap: 3px;
-  }
-
-  .contrib-month-label {
-    font-size: 10px;
-    line-height: 1;
-    color: var(--gh-fg-muted);
   }
 
   .contrib-grid {
     display: grid;
-    grid-template-rows: repeat(7, 11px);
+    grid-template-rows: repeat(7, 1fr);
     gap: 3px;
   }
 
   .contrib-day {
-    width: 11px;
-    height: 11px;
+    aspect-ratio: 1;
+    min-width: 0;
+    min-height: 0;
     border-radius: 2px;
     outline: 1px solid rgba(27, 31, 36, 0.06);
     position: relative;
@@ -303,11 +286,21 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
     outline: none;
   }
 
-  .contrib-level-0 { background-color: var(--contrib-0); }
-  .contrib-level-1 { background-color: var(--contrib-1); }
-  .contrib-level-2 { background-color: var(--contrib-2); }
-  .contrib-level-3 { background-color: var(--contrib-3); }
-  .contrib-level-4 { background-color: var(--contrib-4); }
+  .contrib-level-0 {
+    background-color: var(--contrib-0);
+  }
+  .contrib-level-1 {
+    background-color: var(--contrib-1);
+  }
+  .contrib-level-2 {
+    background-color: var(--contrib-2);
+  }
+  .contrib-level-3 {
+    background-color: var(--contrib-3);
+  }
+  .contrib-level-4 {
+    background-color: var(--contrib-4);
+  }
 
   .contrib-day-filled {
     cursor: default;
@@ -318,53 +311,17 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
     outline-offset: -1px;
   }
 
-  .contrib-day-filled[data-tip]:hover::after {
-    content: attr(data-tip);
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 6px 10px;
-    background-color: var(--gh-fg);
-    color: var(--gh-bg);
-    border-radius: 4px;
-    font-size: 11px;
-    line-height: 1.3;
-    white-space: nowrap;
-    z-index: 20;
-    pointer-events: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  [data-theme='dark'] .contrib-day-filled[data-tip]:hover::after {
-    background-color: var(--gh-surface-elevated);
-    color: var(--gh-fg);
-    border: 1px solid var(--gh-border);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  }
-
-  .contrib-day-filled[data-tip]:hover::before {
-    content: '';
-    position: absolute;
-    bottom: calc(100% + 4px);
-    left: 50%;
-    transform: translateX(-50%);
-    border: 4px solid transparent;
-    border-top-color: var(--gh-fg);
-    z-index: 20;
-    pointer-events: none;
-  }
-
-  [data-theme='dark'] .contrib-day-filled[data-tip]:hover::before {
-    border-top-color: var(--gh-surface-elevated);
+  .contrib-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 12px;
   }
 
   .contrib-legend {
     display: flex;
     align-items: center;
     gap: 4px;
-    margin-top: 12px;
-    justify-content: flex-end;
   }
 
   .contrib-legend-label {
@@ -376,5 +333,11 @@ const defaultGrid = grids.find((g) => g.year === selectedYear) ?? grids[0]
   .contrib-legend-cell {
     width: 11px;
     height: 11px;
+  }
+
+  .contrib-total {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--gh-fg-muted);
   }
 </style>

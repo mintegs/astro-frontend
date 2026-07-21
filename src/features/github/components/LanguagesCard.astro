@@ -12,25 +12,22 @@ const totalPercentage = languages.reduce((sum, l) => sum + l.percentage, 0)
 <div class='languages-bar'>
   {languages.slice(0, 5).map((lang) => (
     <div
-      class='languages-bar-segment'
+      class='lang-trigger languages-bar-segment'
+      data-tip={`${lang.name}\n${lang.percentage}%\n${lang.repoCount} repositories`}
       style={`width: ${(lang.percentage / totalPercentage) * 100}%; background-color: ${lang.color}`}
-      title={`${lang.name}: ${lang.percentage}%`}
     />
   ))}
 </div>
 
-<div class='languages-list'>
+<div class='languages-legend'>
   {languages.map((lang) => (
-    <div class='languages-item'>
-      <div class='languages-item-left'>
-        <span class='languages-dot' style={`background-color: ${lang.color}`} />
-        <span class='languages-name'>{lang.name}</span>
-      </div>
-      <div class='languages-item-right'>
-        <span class='languages-percent'>{lang.percentage}%</span>
-        <span class='languages-repos'>{lang.repoCount} مخزن</span>
-      </div>
-    </div>
+    <span
+      class='lang-trigger languages-name'
+      data-tip={`${lang.name}\n${lang.percentage}%\n${lang.repoCount} repositories`}
+    >
+      <span class='languages-dot' style={`background-color: ${lang.color}`} />
+      {lang.name}
+    </span>
   ))}
 </div>
 
@@ -39,8 +36,7 @@ const totalPercentage = languages.reduce((sum, l) => sum + l.percentage, 0)
     display: flex;
     height: 8px;
     border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     background-color: var(--gh-bg-subtle);
   }
 
@@ -57,23 +53,21 @@ const totalPercentage = languages.reduce((sum, l) => sum + l.percentage, 0)
     border-radius: 0 4px 4px 0;
   }
 
-  .languages-list {
+  .languages-legend {
     display: flex;
-    flex-direction: column;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow: hidden;
   }
 
-  .languages-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 4px 0;
-  }
-
-  .languages-item-left {
-    display: flex;
+  .languages-name {
+    display: inline-flex;
     align-items: center;
     gap: 8px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--gh-fg-muted);
+    white-space: nowrap;
   }
 
   .languages-dot {
@@ -83,27 +77,51 @@ const totalPercentage = languages.reduce((sum, l) => sum + l.percentage, 0)
     flex-shrink: 0;
   }
 
-  .languages-name {
-    font-size: 0.8125rem;
+  .lang-trigger {
+    position: relative;
+    cursor: default;
+  }
+
+  .lang-trigger[data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 10px;
+    background-color: var(--gh-fg);
+    color: var(--gh-bg);
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 1.4;
+    white-space: pre-line;
+    z-index: 20;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: opacity 0.15s ease;
+  }
+
+  [data-theme='dark'] .lang-trigger[data-tip]:hover::after {
+    background-color: var(--gh-surface-elevated);
     color: var(--gh-fg);
+    border: 1px solid var(--gh-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
 
-  .languages-item-right {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+  .lang-trigger[data-tip]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--gh-fg);
+    z-index: 20;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
   }
 
-  .languages-percent {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--gh-fg);
-    min-width: 36px;
-    text-align: left;
-  }
-
-  .languages-repos {
-    font-size: 0.6875rem;
-    color: var(--gh-fg-muted);
+  [data-theme='dark'] .lang-trigger[data-tip]:hover::before {
+    border-top-color: var(--gh-surface-elevated);
   }
 </style>
