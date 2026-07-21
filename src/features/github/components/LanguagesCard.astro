@@ -6,51 +6,82 @@ interface Props {
 }
 
 const { languages } = Astro.props
-const totalPercentage = languages.reduce((sum, l) => sum + l.percentage, 0)
+const topLanguages = languages.slice(0, 5)
+const otherPercentage = 100 - topLanguages.reduce((sum, l) => sum + l.percentage, 0)
+const totalPercentage = topLanguages.reduce((sum, l) => sum + l.percentage, 0)
 ---
 
-<div class='languages-bar'>
-  {languages.slice(0, 5).map((lang) => (
-    <div
-      class='lang-trigger languages-bar-segment'
-      data-tip={`${lang.name}\n${lang.percentage}%\n${lang.repoCount} repositories`}
-      style={`width: ${(lang.percentage / totalPercentage) * 100}%; background-color: ${lang.color}`}
-    />
-  ))}
-</div>
+<div data-language-card>
+  <div class='languages-bar'>
+    {topLanguages.map((lang) => (
+      <span
+        class='lang-trigger languages-bar-segment'
+        data-language-id={lang.name}
+        data-language-name={lang.name}
+        data-language-percentage={`${lang.percentage}% of codebase`}
+        data-language-repositories={`${lang.repoCount} repositories`}
+        style={`width: ${(lang.percentage / totalPercentage) * 100}%; background-color: ${lang.color}`}
+      />
+    ))}
+    {otherPercentage > 0 && (
+      <span
+        class='lang-trigger languages-bar-segment languages-bar-other'
+        data-language-id='Other'
+        data-language-name='Other'
+        data-language-percentage={`${otherPercentage.toFixed(1)}% of codebase`}
+        style={`width: ${(otherPercentage / totalPercentage) * 100}%`}
+      />
+    )}
+  </div>
 
-<div class='languages-legend'>
-  {languages.map((lang) => (
-    <span
-      class='lang-trigger languages-name'
-      data-tip={`${lang.name}\n${lang.percentage}%\n${lang.repoCount} repositories`}
-    >
-      <span class='languages-dot' style={`background-color: ${lang.color}`} />
-      {lang.name}
-    </span>
-  ))}
+  <div class='languages-legend'>
+    {topLanguages.map((lang) => (
+      <span class='lang-trigger languages-name'>
+        <span
+          class='languages-dot'
+          data-language-id={lang.name}
+          style={`background-color: ${lang.color}`}
+        />
+        <span class='languages-label' data-language-id={lang.name}>{lang.name}</span>
+      </span>
+    ))}
+    {otherPercentage > 0 && (
+      <span class='lang-trigger languages-name'>
+        <span
+          class='languages-dot languages-dot-other'
+          data-language-id='Other'
+        />
+        <span class='languages-label' data-language-id='Other'>Other</span>
+      </span>
+    )}
+  </div>
+
+  <span class='lang-tooltip' data-language-tooltip role='tooltip' aria-hidden='true' hidden>
+    <span class='lang-tooltip-name' data-tooltip-name></span>
+    <span class='lang-tooltip-detail' data-tooltip-percentage></span>
+    <span class='lang-tooltip-secondary' data-tooltip-repositories></span>
+  </span>
 </div>
 
 <style>
   .languages-bar {
     display: flex;
     height: 8px;
-    border-radius: 4px;
+    border-radius: 9999px;
     margin-bottom: 12px;
     background-color: var(--gh-bg-subtle);
+    overflow: hidden;
   }
 
   .languages-bar-segment {
     height: 100%;
+    position: relative;
+    cursor: default;
     transition: opacity 0.15s ease;
   }
 
-  .languages-bar-segment:first-child {
-    border-radius: 4px 0 0 4px;
-  }
-
-  .languages-bar-segment:last-child {
-    border-radius: 0 4px 4px 0;
+  .languages-bar-other {
+    background-color: var(--gh-border-muted);
   }
 
   .languages-legend {
@@ -68,6 +99,8 @@ const totalPercentage = languages.reduce((sum, l) => sum + l.percentage, 0)
     font-weight: 500;
     color: var(--gh-fg-muted);
     white-space: nowrap;
+    position: relative;
+    cursor: default;
   }
 
   .languages-dot {
@@ -77,51 +110,199 @@ const totalPercentage = languages.reduce((sum, l) => sum + l.percentage, 0)
     flex-shrink: 0;
   }
 
+  .languages-dot-other {
+    background-color: var(--gh-border-muted);
+  }
+
   .lang-trigger {
     position: relative;
     cursor: default;
   }
 
-  .lang-trigger[data-tip]:hover::after {
-    content: attr(data-tip);
-    position: absolute;
-    bottom: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 6px 10px;
-    background-color: var(--gh-fg);
-    color: var(--gh-bg);
-    border-radius: 4px;
-    font-size: 11px;
-    line-height: 1.4;
-    white-space: pre-line;
-    z-index: 20;
-    pointer-events: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    transition: opacity 0.15s ease;
-  }
-
-  [data-theme='dark'] .lang-trigger[data-tip]:hover::after {
+  .lang-tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(260px, calc(100vw - 16px));
+    box-sizing: border-box;
+    padding: 12px 16px;
     background-color: var(--gh-surface-elevated);
     color: var(--gh-fg);
     border: 1px solid var(--gh-border);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.12),
+      0 1px 3px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
-  .lang-trigger[data-tip]:hover::before {
+  .lang-tooltip[hidden] {
+    display: none;
+  }
+
+  [data-theme='dark'] .lang-tooltip {
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.35),
+      0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  .lang-tooltip::after {
     content: '';
     position: absolute;
-    bottom: calc(100% + 4px);
-    left: 50%;
-    transform: translateX(-50%);
-    border: 4px solid transparent;
-    border-top-color: var(--gh-fg);
-    z-index: 20;
-    pointer-events: none;
-    transition: opacity 0.15s ease;
+    bottom: -5px;
+    left: var(--tooltip-arrow-left, 50%);
+    transform: translateX(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background-color: var(--gh-surface-elevated);
+    border-right: 1px solid var(--gh-border);
+    border-bottom: 1px solid var(--gh-border);
   }
 
-  [data-theme='dark'] .lang-trigger[data-tip]:hover::before {
-    border-top-color: var(--gh-surface-elevated);
+  .lang-tooltip-name {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--gh-fg);
+    line-height: 1.4;
+  }
+
+  .lang-tooltip-detail {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--gh-fg-secondary);
+    line-height: 1.4;
+  }
+
+  .lang-tooltip-secondary {
+    font-size: 0.6875rem;
+    color: var(--gh-fg-muted);
+    line-height: 1.4;
   }
 </style>
+
+<script>
+  function setupLanguageTooltips() {
+    document.querySelectorAll<HTMLElement>('[data-language-card]').forEach((card) => {
+      if (card.dataset.tooltipReady === 'true') return
+
+      const tooltip = card.querySelector<HTMLElement>('[data-language-tooltip]')
+      const tooltipName = tooltip?.querySelector<HTMLElement>('[data-tooltip-name]')
+      const tooltipPercentage = tooltip?.querySelector<HTMLElement>('[data-tooltip-percentage]')
+      const tooltipRepositories = tooltip?.querySelector<HTMLElement>(
+        '[data-tooltip-repositories]',
+      )
+
+      if (!tooltip || !tooltipName || !tooltipPercentage || !tooltipRepositories) return
+
+      const segments = new Map(
+        Array.from(
+          card.querySelectorAll<HTMLElement>(
+            '.languages-bar-segment[data-language-id]',
+          ),
+        ).map((segment) => [segment.dataset.languageId, segment]),
+      )
+
+      let activeLanguageId: string | undefined
+
+      const positionTooltip = () => {
+        const segment = activeLanguageId ? segments.get(activeLanguageId) : undefined
+        if (!segment || tooltip.hidden) return
+
+        const viewportPadding = 8
+        const tooltipGap = 10
+        const segmentRect = segment.getBoundingClientRect()
+        const tooltipRect = tooltip.getBoundingClientRect()
+        const segmentCenter = segmentRect.left + segmentRect.width / 2
+        const maxLeft = Math.max(
+          viewportPadding,
+          window.innerWidth - tooltipRect.width - viewportPadding,
+        )
+        const left = Math.min(
+          Math.max(segmentCenter - tooltipRect.width / 2, viewportPadding),
+          maxLeft,
+        )
+        const maxTop = Math.max(
+          viewportPadding,
+          window.innerHeight - tooltipRect.height - viewportPadding,
+        )
+        const top = Math.min(
+          Math.max(
+            segmentRect.top - tooltipRect.height - tooltipGap,
+            viewportPadding,
+          ),
+          maxTop,
+        )
+        const arrowLeft = Math.min(
+          Math.max(segmentCenter - left, 12),
+          tooltipRect.width - 12,
+        )
+
+        tooltip.style.left = `${left}px`
+        tooltip.style.top = `${top}px`
+        tooltip.style.setProperty('--tooltip-arrow-left', `${arrowLeft}px`)
+      }
+
+      const showTooltip = (languageId: string) => {
+        const segment = segments.get(languageId)
+        if (!segment) return
+
+        activeLanguageId = languageId
+        tooltipName.textContent = segment.dataset.languageName ?? ''
+        tooltipPercentage.textContent = segment.dataset.languagePercentage ?? ''
+
+        const repositories = segment.dataset.languageRepositories
+        tooltipRepositories.textContent = repositories ?? ''
+        tooltipRepositories.hidden = !repositories
+
+        tooltip.hidden = false
+        tooltip.setAttribute('aria-hidden', 'false')
+        positionTooltip()
+      }
+
+      const hideTooltip = () => {
+        activeLanguageId = undefined
+        tooltip.hidden = true
+        tooltip.setAttribute('aria-hidden', 'true')
+      }
+
+      card.addEventListener('pointerover', (event) => {
+        const target = event.target
+        if (!(target instanceof Element)) return
+
+        const trigger = target.closest<HTMLElement>('[data-language-id]')
+        if (!trigger || !card.contains(trigger)) return
+
+        const languageId = trigger.dataset.languageId
+        if (languageId) showTooltip(languageId)
+      })
+
+      card.addEventListener('pointerout', (event) => {
+        const relatedTarget = event.relatedTarget
+
+        if (relatedTarget instanceof Element) {
+          const nextTrigger = relatedTarget.closest<HTMLElement>('[data-language-id]')
+          if (
+            nextTrigger &&
+            card.contains(nextTrigger) &&
+            nextTrigger.dataset.languageId === activeLanguageId
+          ) {
+            return
+          }
+        }
+
+        hideTooltip()
+      })
+
+      window.addEventListener('resize', positionTooltip)
+      window.addEventListener('scroll', positionTooltip, true)
+      card.dataset.tooltipReady = 'true'
+    })
+  }
+
+  setupLanguageTooltips()
+  document.addEventListener('astro:page-load', setupLanguageTooltips)
+</script>
